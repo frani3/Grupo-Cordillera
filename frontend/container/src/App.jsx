@@ -1,15 +1,38 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import { BrowserRouter, Link, Navigate, NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Link, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import Layout from './Layout';
+import DatosPage from './pages/DatosPage';
+import IndicadoresPage from './pages/IndicadoresPage';
+import ReportesPage from './pages/ReportesPage';
+import UsuariosPage from './pages/UsuariosPage';
 
 const AUTH_STORAGE_KEY = 'grupo-cordillera-auth';
 
 const VALID_CREDENTIALS = {
-  'ejecutivo@cordillera.cl': { password: '1234', role: 'ejecutivo' },
-  'analista@cordillera.cl': { password: '1234', role: 'analista' },
-  'admin@cordillera.cl': { password: '1234', role: 'admin' },
+  'ejecutivo@cordillera.cl': { password: '1234', role: 'EJECUTIVO' },
+  'analista@cordillera.cl': { password: '1234', role: 'ANALISTA' },
+  'admin@cordillera.cl': { password: '1234', role: 'ADMINISTRADOR' },
 };
 
 const AuthContext = createContext(null);
+
+function normalizeRole(role) {
+  const value = String(role ?? '').trim().toLowerCase();
+
+  if (value === 'admin' || value === 'administrador') {
+    return 'ADMINISTRADOR';
+  }
+
+  if (value === 'ejecutivo') {
+    return 'EJECUTIVO';
+  }
+
+  if (value === 'analista') {
+    return 'ANALISTA';
+  }
+
+  return String(role ?? '').trim().toUpperCase();
+}
 
 function normalizeStoredAuth(value) {
   if (!value || typeof value !== 'object' || !value.isAuthenticated) {
@@ -30,7 +53,7 @@ function normalizeStoredAuth(value) {
     isAuthenticated: true,
     user: {
       email,
-      role: typeof user.role === 'string' ? user.role : VALID_CREDENTIALS[email]?.role ?? 'viewer',
+      role: normalizeRole(user.role ?? VALID_CREDENTIALS[email]?.role ?? 'EJECUTIVO'),
     },
   };
 }
@@ -76,7 +99,7 @@ function AuthProvider({ children }) {
       isAuthenticated: true,
       user: {
         email: normalizedEmail,
-        role: credentials.role,
+        role: normalizeRole(credentials.role),
       },
     });
 
@@ -125,49 +148,18 @@ function PrivateRoute({ children, allowedRoles }) {
   return children;
 }
 
-function Navbar() {
+function DashboardLayout({ moduloActivo, children }) {
   const { user, logout } = useAuth();
 
   return (
-    <header className="border-b border-slate-200 bg-white/90 backdrop-blur">
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-4">
-        <div>
-          <p className="text-xs font-bold uppercase tracking-[0.28em] text-[#1E5FA8]">Grupo Cordillera</p>
-          <p className="mt-1 text-sm text-slate-500">Sesión activa: {user?.email ?? 'Usuario'}</p>
-        </div>
-
-        <nav className="flex items-center gap-3 text-sm font-semibold text-slate-600">
-          <NavLink
-            to="/dashboard"
-            className={({ isActive }) =>
-              [
-                'rounded-full px-4 py-2 transition-colors',
-                isActive ? 'bg-[#1E5FA8] text-white' : 'hover:bg-slate-100 hover:text-slate-900',
-              ].join(' ')
-            }
-          >
-            Dashboard
-          </NavLink>
-
-          <button
-            type="button"
-            onClick={logout}
-            className="rounded-full border border-slate-300 px-4 py-2 text-slate-700 transition-colors hover:border-slate-400 hover:bg-slate-50"
-          >
-            Cerrar sesión
-          </button>
-        </nav>
-      </div>
-    </header>
-  );
-}
-
-function AppShell({ children }) {
-  return (
-    <div className="min-h-screen bg-[linear-gradient(180deg,#f8fafc_0%,#eef4fb_100%)] text-slate-900">
-      <Navbar />
-      <main className="mx-auto w-full max-w-6xl px-4 py-8">{children}</main>
-    </div>
+    <Layout
+      moduloActivo={moduloActivo}
+      email={user?.email ?? 'Usuario'}
+      role={user?.role ?? ''}
+      onLogout={logout}
+    >
+      {children}
+    </Layout>
   );
 }
 
@@ -245,13 +237,18 @@ function LoginPage() {
         </button>
 
         {errorMessage ? <p className="mt-4 text-sm font-medium text-rose-600">{errorMessage}</p> : null}
+
+        <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4 text-sm text-slate-700">
+          <p className="text-xs font-bold uppercase tracking-[0.22em] text-slate-500">Credenciales de prueba</p>
+          <div className="mt-3 space-y-2 font-mono text-xs leading-5 text-slate-600">
+            <p>ejecutivo@cordillera.cl / 1234</p>
+            <p>analista@cordillera.cl / 1234</p>
+            <p>admin@cordillera.cl / 1234</p>
+          </div>
+        </div>
       </form>
     </div>
   );
-}
-
-function DashboardPage() {
-  return <div className="text-4xl font-black tracking-tight text-slate-900">Dashboard</div>;
 }
 
 function AccesoDenegadoPage() {
@@ -282,13 +279,44 @@ export default function App() {
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/acceso-denegado" element={<AccesoDenegadoPage />} />
+          <Route path="/dashboard" element={<PrivateRoute><Navigate to="/dashboard/indicadores" replace /></PrivateRoute>} />
           <Route
-            path="/dashboard"
+            path="/dashboard/indicadores"
             element={
               <PrivateRoute>
-                <AppShell>
-                  <DashboardPage />
-                </AppShell>
+                <DashboardLayout moduloActivo="Indicadores">
+                  <IndicadoresPage />
+                </DashboardLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/dashboard/datos"
+            element={
+              <PrivateRoute>
+                <DashboardLayout moduloActivo="Datos">
+                  <DatosPage />
+                </DashboardLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/dashboard/reportes"
+            element={
+              <PrivateRoute>
+                <DashboardLayout moduloActivo="Reportes">
+                  <ReportesPage />
+                </DashboardLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/dashboard/usuarios"
+            element={
+              <PrivateRoute allowedRoles={['ADMINISTRADOR']}>
+                <DashboardLayout moduloActivo="Usuarios">
+                  <UsuariosPage />
+                </DashboardLayout>
               </PrivateRoute>
             }
           />
