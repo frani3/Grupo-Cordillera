@@ -1,5 +1,6 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { BrowserRouter, Link, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import AuthContext from './AuthContext';
 import Layout from './Layout';
 import DatosPage from './pages/DatosPage';
 import IndicadoresPage from './pages/IndicadoresPage';
@@ -13,8 +14,6 @@ const VALID_CREDENTIALS = {
   'analista@cordillera.cl': { password: '1234', role: 'ANALISTA' },
   'admin@cordillera.cl': { password: '1234', role: 'ADMINISTRADOR' },
 };
-
-const AuthContext = createContext(null);
 
 function normalizeRole(role) {
   const value = String(role ?? '').trim().toLowerCase();
@@ -114,6 +113,7 @@ function AuthProvider({ children }) {
     () => ({
       isAuthenticated: authState.isAuthenticated,
       user: authState.user,
+      usuario: authState.user,
       login,
       logout,
     }),

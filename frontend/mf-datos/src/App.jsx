@@ -6,7 +6,6 @@ import TablaRegistros from './components/TablaRegistros';
 import { getEstadoCircuitos, getRegistros } from './services/datosService';
 
 const TAMANO_PAGINA = 5;
-const rolSimulado = 'ADMINISTRADOR';
 
 const filtrosIniciales = {
   fuente: 'Todas',
@@ -14,7 +13,7 @@ const filtrosIniciales = {
   hasta: '',
 };
 
-export default function App() {
+export default function App({ rolUsuario }) {
   const [estadoCircuitos, setEstadoCircuitos] = useState([]);
   const [registros, setRegistros] = useState([]);
   const [paginaActual, setPaginaActual] = useState(1);
@@ -114,7 +113,7 @@ export default function App() {
           </div>
 
           <div className="rounded-full bg-[#1E5FA8]/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.22em] text-[#1E5FA8]">
-            Rol simulado: {rolSimulado}
+            Rol activo: {rolUsuario ?? 'Sin definir'}
           </div>
         </div>
 
@@ -151,14 +150,14 @@ export default function App() {
         />
       </section>
 
-      {rolSimulado === 'ADMINISTRADOR' ? (
+      {rolUsuario === 'ADMINISTRADOR' ? (
         <section className="space-y-4 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.28em] text-slate-400">Administración</p>
             <h3 className="mt-2 text-2xl font-black tracking-tight text-slate-900">Historial de auditoría técnica</h3>
           </div>
 
-          <TablaAuditoria rolUsuario={rolSimulado} />
+          <TablaAuditoria rolUsuario={rolUsuario} />
         </section>
       ) : null}
     </main>

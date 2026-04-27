@@ -1,9 +1,24 @@
-import React from 'react';
+import React, { Suspense, useContext } from 'react';
+import AuthContext from '../AuthContext';
+import ErrorBoundary from '../components/ErrorBoundary';
+import { Spinner } from '@shared';
+
+const MfReportes = React.lazy(() => import('mfReportes/App'));
 
 export default function ReportesPage() {
+  const { usuario } = useContext(AuthContext);
+
   return (
-    <div className="flex h-full min-h-[calc(100vh-112px)] items-center justify-center rounded-3xl border border-dashed border-slate-300 bg-white text-2xl font-semibold text-slate-700">
-      Módulo de Reportes
-    </div>
+    <ErrorBoundary message="No se pudo cargar el módulo de Reportes. Intenta refrescar la página.">
+      <Suspense
+        fallback={
+          <div className="flex min-h-[calc(100vh-112px)] items-center justify-center rounded-3xl border border-dashed border-slate-300 bg-white">
+            <Spinner />
+          </div>
+        }
+      >
+        <MfReportes rolUsuario={usuario?.role} />
+      </Suspense>
+    </ErrorBoundary>
   );
 }
