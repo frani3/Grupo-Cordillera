@@ -4,7 +4,7 @@ import { getDashboard } from './services/kpiService';
 
 function KpiSkeleton() {
   return (
-    <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
       <div className="animate-pulse space-y-4">
         <div className="h-4 w-32 rounded-full bg-slate-200" />
         <div className="h-10 w-2/3 rounded-2xl bg-slate-200" />

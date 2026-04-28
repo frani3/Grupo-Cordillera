@@ -47,8 +47,7 @@ function TooltipPersonalizado({ active, payload }) {
   );
 }
 
-export default function GraficoTendencia({ kpiId, nombre }) {
-  const [periodo, setPeriodo] = useState(30);
+export default function GraficoTendencia({ kpiId, nombre, periodo }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [state, setState] = useState({ kpi: null, historico: [] });
@@ -103,23 +102,9 @@ export default function GraficoTendencia({ kpiId, nombre }) {
           <h3 className="mt-1 text-lg font-bold text-gray-900">{nombre}</h3>
         </div>
 
-        <div className="inline-flex rounded-2xl border border-gray-200 bg-white p-1 shadow-sm">
-          {[7, 30, 90].map((dias) => (
-            <button
-              key={dias}
-              type="button"
-              onClick={() => setPeriodo(dias)}
-              className={`rounded-xl px-4 py-2 text-sm font-semibold transition-colors ${
-                periodo === dias ? 'bg-primary-600 text-white' : 'text-gray-600 hover:bg-gray-100'
-              }`}
-            >
-              {dias} días
-            </button>
-          ))}
-        </div>
       </div>
 
-      <div className="h-[320px] rounded-3xl bg-white p-3 shadow-sm">
+      <div className="h-[320px] rounded-xl border border-gray-100 bg-white p-4">
         {loading ? (
           <div className="flex h-full items-center justify-center text-sm font-medium text-gray-500">Cargando tendencia...</div>
         ) : error || !state.kpi ? (

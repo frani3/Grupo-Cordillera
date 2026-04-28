@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 
 function BadgeEstado({ activo }) {
   const clases = activo
-    ? 'border-success/20 bg-success/10 text-success'
+    ? 'border-green-200 bg-green-50 text-green-700'
     : 'border-gray-200 bg-gray-100 text-gray-600';
 
   return (
@@ -15,10 +15,10 @@ function BadgeEstado({ activo }) {
 function BadgeRol({ rol }) {
   const clases =
     rol === 'ADMINISTRADOR'
-      ? 'border-primary-200 bg-primary-50 text-primary-700'
+      ? 'border-blue-100 bg-blue-50 text-blue-700'
       : rol === 'ANALISTA'
         ? 'border-gray-200 bg-gray-100 text-gray-700'
-        : 'border-primary-200 bg-primary-50 text-primary-700';
+        : 'border-blue-100 bg-blue-50 text-blue-700';
 
   return (
     <span className={`inline-flex rounded-full border px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] ${clases}`}>
@@ -30,7 +30,7 @@ function BadgeRol({ rol }) {
 function ModalConfirmacion({ usuario, onCancelar, onConfirmar }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-950/30 px-4 backdrop-blur-sm">
-      <div className="w-full max-w-md rounded-[1.75rem] border border-gray-200 bg-white p-6 shadow-sm">
+      <div className="w-full max-w-md rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
         <p className="text-xs font-bold uppercase tracking-[0.28em] text-gray-400">Confirmación</p>
         <h3 className="mt-3 text-2xl font-black tracking-tight text-gray-900">Desactivar usuario</h3>
         <p className="mt-3 text-sm leading-6 text-gray-600">
@@ -41,14 +41,14 @@ function ModalConfirmacion({ usuario, onCancelar, onConfirmar }) {
           <button
             type="button"
             onClick={onCancelar}
-            className="rounded-2xl border border-gray-300 px-4 py-3 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50"
+            className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
           >
             Cancelar
           </button>
           <button
             type="button"
             onClick={onConfirmar}
-            className="rounded-2xl bg-danger px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-red-700"
+            className="rounded-lg border border-red-200 bg-white px-4 py-2 text-sm font-medium text-red-600 transition-colors hover:bg-red-50"
           >
             Desactivar
           </button>
@@ -80,10 +80,10 @@ export default function TablaUsuarios({ usuarios, onCambiarRol, onDesactivar }) 
 
   return (
     <div className="space-y-4">
-      <div className="overflow-hidden rounded-[1.75rem] border border-gray-200 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm">
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+          <table className="min-w-full border-separate border-spacing-0">
+            <thead className="border-b border-gray-100 bg-gray-50">
               <tr className="text-left text-xs font-bold uppercase tracking-[0.2em] text-gray-500">
                 <th className="px-6 py-4">Nombre</th>
                 <th className="px-6 py-4">Email</th>
@@ -92,9 +92,9 @@ export default function TablaUsuarios({ usuarios, onCambiarRol, onDesactivar }) 
                 <th className="px-6 py-4">Acciones</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="bg-white">
               {usuariosOrdenados.map((usuario) => (
-                <tr key={usuario.id} className="align-top">
+                <tr key={usuario.id} className="align-top border-b border-gray-50 transition-colors hover:bg-blue-50/30">
                   <td className="px-6 py-4">
                     <div className="font-semibold text-gray-900">{usuario.nombre}</div>
                   </td>
@@ -110,7 +110,7 @@ export default function TablaUsuarios({ usuarios, onCambiarRol, onDesactivar }) 
                       <button
                         type="button"
                         onClick={() => onCambiarRol(usuario)}
-                        className="rounded-2xl border border-primary-200 bg-primary-50 px-4 py-2 text-sm font-semibold text-primary-700 transition-colors hover:bg-primary-100"
+                        className="rounded-lg bg-gradient-brand px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
                       >
                         Cambiar rol
                       </button>
@@ -118,7 +118,7 @@ export default function TablaUsuarios({ usuarios, onCambiarRol, onDesactivar }) 
                         type="button"
                         disabled={!usuario.activo}
                         onClick={() => setUsuarioPendiente(usuario)}
-                        className="rounded-2xl border border-gray-300 px-4 py-2 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-gray-100 disabled:text-gray-400"
+                        className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400"
                       >
                         Desactivar
                       </button>

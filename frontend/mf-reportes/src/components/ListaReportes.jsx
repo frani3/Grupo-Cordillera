@@ -11,8 +11,8 @@ function formatDateTime(dateString) {
 }
 
 const tipoStyles = {
-  RESUMEN_MENSUAL: 'bg-primary-50 text-primary-700 border-primary-200',
-  COMPARATIVO_HISTORICO: 'bg-gray-100 text-gray-700 border-gray-200',
+  RESUMEN_MENSUAL: 'bg-blue-50 text-blue-700 border-blue-100',
+  COMPARATIVO_HISTORICO: 'bg-violet-50 text-violet-700 border-violet-100',
 };
 
 export default function ListaReportes({ reportes, onVerDetalle }) {
@@ -25,7 +25,7 @@ export default function ListaReportes({ reportes, onVerDetalle }) {
   }, [reportes, tipoFiltro]);
 
   return (
-    <section className="space-y-4 rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
+    <section className="space-y-4 rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.28em] text-gray-400">Listado</p>
@@ -37,7 +37,7 @@ export default function ListaReportes({ reportes, onVerDetalle }) {
           <select
             value={tipoFiltro}
             onChange={(event) => setTipoFiltro(event.target.value)}
-            className="mt-2 min-w-[220px] rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-primary-600"
+            className="mt-2 min-w-[220px] rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
           >
             <option value="TODOS">Todos</option>
             <option value="RESUMEN_MENSUAL">RESUMEN_MENSUAL</option>
@@ -47,40 +47,40 @@ export default function ListaReportes({ reportes, onVerDetalle }) {
       </div>
 
       {reportesFiltrados.length === 0 ? (
-        <div className="rounded-3xl border border-dashed border-gray-300 bg-gray-50 px-6 py-10 text-center text-sm font-medium text-gray-500">
+        <div className="rounded-xl border border-dashed border-gray-200 bg-gray-50 px-6 py-10 text-center text-sm text-gray-500">
           Aún no se han generado reportes. Usa el botón Generar para crear el primero.
         </div>
       ) : (
-        <div className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+        <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm">
+          <table className="min-w-full border-separate border-spacing-0">
+            <thead className="bg-gray-50 border-b border-gray-100">
               <tr>
-                <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Tipo</th>
-                <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Período</th>
-                <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Fecha de generación</th>
-                <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Generado por</th>
-                <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Acción</th>
+                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">Tipo</th>
+                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">Período</th>
+                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">Fecha de generación</th>
+                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">Generado por</th>
+                <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">Acción</th>
               </tr>
             </thead>
 
-            <tbody className="divide-y divide-gray-100 bg-white">
+            <tbody className="bg-white">
               {reportesFiltrados.map((reporte) => (
-                <tr key={reporte.id} className="align-top hover:bg-gray-50/80">
+                <tr key={reporte.id} className="align-top border-b border-gray-50 transition-colors hover:bg-blue-50/30">
                   <td className="px-4 py-4">
-                    <span className={`inline-flex rounded-full border px-3 py-1 text-xs font-bold tracking-[0.18em] ${tipoStyles[reporte.tipo] || tipoStyles.RESUMEN_MENSUAL}`}>
+                    <span className={`inline-flex rounded-full border px-3 py-0.5 text-xs font-medium ${tipoStyles[reporte.tipo] || tipoStyles.RESUMEN_MENSUAL}`}>
                       {reporte.tipo}
                     </span>
                   </td>
-                  <td className="px-4 py-4 text-sm font-medium text-slate-700">{reporte.periodo}</td>
-                  <td className="px-4 py-4 text-sm font-medium text-slate-700">{formatDateTime(reporte.fechaGeneracion)}</td>
-                  <td className="px-4 py-4 text-sm text-slate-600">{reporte.usuarioQueGenero}</td>
+                  <td className="px-4 py-4 text-sm text-gray-700">{reporte.periodo}</td>
+                  <td className="px-4 py-4 text-sm text-gray-700">{formatDateTime(reporte.fechaGeneracion)}</td>
+                  <td className="px-4 py-4 text-sm text-gray-700">{reporte.usuarioQueGenero}</td>
                   <td className="px-4 py-4">
                     <button
                       type="button"
                       onClick={() => onVerDetalle(reporte.id)}
-                      className="rounded-2xl border border-primary-200 bg-white px-4 py-2 text-sm font-semibold text-primary-700 transition-colors hover:bg-primary-50"
+                      className="text-sm font-medium text-blue-700 transition-colors hover:underline"
                     >
-                      Ver detalle
+                      →
                     </button>
                   </td>
                 </tr>

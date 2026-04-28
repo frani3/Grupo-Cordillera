@@ -2,6 +2,11 @@ module.exports = {
   content: ['./src/**/*.{js,jsx}'],
   theme: {
     extend: {
+      backgroundImage: {
+        'gradient-brand': 'linear-gradient(135deg, #2563EB 0%, #7C3AED 100%)',
+        'gradient-brand-soft': 'linear-gradient(135deg, #EFF6FF 0%, #EDE9FE 100%)',
+        'gradient-navbar': 'linear-gradient(90deg, #1E40AF 0%, #2563EB 50%, #7C3AED 100%)',
+      },
       colors: {
         primary: {
           DEFAULT: '#2563EB',
@@ -27,6 +32,9 @@ module.exports = {
         success: '#16A34A',
         warning: '#CA8A04',
         danger: '#DC2626',
+      },
+      borderWidth: {
+        3: '3px',
       },
       fontFamily: {
         sans: ['Inter', 'Arial', 'sans-serif'],

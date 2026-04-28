@@ -2,18 +2,23 @@ import React from 'react';
 
 export default function Navbar({ moduloActivo, email, onLogout }) {
   return (
-    <header className="fixed left-0 top-0 z-50 h-16 w-full border-b border-gray-200 bg-white/95 text-gray-900 backdrop-blur">
+    <header className="fixed left-0 top-0 z-50 h-16 w-full bg-gradient-navbar text-white shadow-sm">
       <div className="grid h-full grid-cols-[1fr_auto_1fr] items-center px-6">
-        <div className="justify-self-start text-lg font-semibold tracking-tight text-gray-900">Grupo Cordillera</div>
+        <div className="flex items-center gap-3 justify-self-start">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-sm font-black text-primary-600 shadow-sm">
+            GC
+          </div>
+          <div className="text-lg font-bold tracking-tight text-white">Grupo Cordillera</div>
+        </div>
 
-        <div className="justify-self-center text-sm font-medium tracking-wide text-gray-500">{moduloActivo}</div>
+        <div className="justify-self-center text-sm font-medium tracking-wide text-white">{moduloActivo}</div>
 
         <div className="flex items-center justify-self-end gap-4 text-sm">
-          <span className="max-w-[220px] truncate font-medium text-gray-600">{email}</span>
+          <span className="max-w-[220px] truncate font-medium text-white/80">{email}</span>
           <button
             type="button"
             onClick={onLogout}
-            className="rounded-full border border-gray-200 bg-white px-4 py-2 font-semibold text-gray-700 transition-colors hover:border-gray-300 hover:bg-gray-50"
+            className="rounded-full border border-white/40 px-4 py-2 font-semibold text-white transition-colors hover:bg-white hover:text-primary-600"
           >
             Cerrar sesión
           </button>

@@ -59,13 +59,13 @@ export default function TablaAuditoria({ rolUsuario }) {
 
   return (
     <div className="space-y-4">
-      <div className="grid gap-4 lg:grid-cols-[1fr_1fr_1fr_auto] lg:items-end">
-        <label className="block text-sm font-semibold text-gray-700">
+      <div className="flex flex-col gap-3 xl:flex-row xl:items-center">
+        <label className="block w-full text-sm font-semibold text-gray-700 xl:w-40">
           Tipo de evento
           <select
             value={tipoFiltro}
             onChange={(event) => setTipoFiltro(event.target.value)}
-            className="mt-2 w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-primary-600"
+            className="mt-2 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-900 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
           >
             <option value="TODOS">Todos</option>
             <option value="ERROR">ERROR</option>
@@ -73,63 +73,63 @@ export default function TablaAuditoria({ rolUsuario }) {
           </select>
         </label>
 
-        <label className="block text-sm font-semibold text-gray-700">
+        <label className="block w-full text-sm font-semibold text-gray-700 xl:w-36">
           Desde
           <input
             type="date"
             value={desde}
             onChange={(event) => setDesde(event.target.value)}
-            className="mt-2 w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-primary-600"
+            className="mt-2 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-900 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
           />
         </label>
 
-        <label className="block text-sm font-semibold text-gray-700">
+        <label className="block w-full text-sm font-semibold text-gray-700 xl:w-36">
           Hasta
           <input
             type="date"
             value={hasta}
             onChange={(event) => setHasta(event.target.value)}
-            className="mt-2 w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-primary-600"
+            className="mt-2 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-900 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
           />
         </label>
 
         <button
           type="button"
           onClick={exportarCsv}
-          className="rounded-2xl border border-primary-200 bg-white px-4 py-3 text-sm font-semibold text-primary-700 transition-colors hover:bg-primary-50"
+          className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
         >
           Exportar CSV
         </button>
       </div>
 
-      <div className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+      <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm">
+        <table className="min-w-full border-separate border-spacing-0">
+          <thead className="bg-gray-50 border-b border-gray-100">
             <tr>
-              <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Tipo de evento</th>
-              <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Origen</th>
-              <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Descripción</th>
-              <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Timestamp</th>
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">Tipo de evento</th>
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">Origen</th>
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">Descripción</th>
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">Timestamp</th>
             </tr>
           </thead>
 
-          <tbody className="divide-y divide-gray-100 bg-white">
+          <tbody className="bg-white">
             {eventosFiltrados.length > 0 ? (
               eventosFiltrados.map((evento) => (
-                <tr key={evento.id} className="align-top hover:bg-gray-50/80">
+                <tr key={evento.id} className="align-top border-b border-gray-50 transition-colors hover:bg-blue-50/30">
                   <td className="px-4 py-4">
-                    <span className={`inline-flex rounded-full border px-3 py-1 text-xs font-bold tracking-[0.18em] ${tipoStyles[evento.tipoEvento] || tipoStyles.ERROR}`}>
+                    <span className={`inline-flex rounded-full border px-3 py-1 text-xs font-semibold ${tipoStyles[evento.tipoEvento] || tipoStyles.ERROR}`}>
                       {evento.tipoEvento}
                     </span>
                   </td>
-                  <td className="px-4 py-4 text-sm font-medium text-gray-700">{evento.origen}</td>
-                  <td className="px-4 py-4 text-sm leading-6 text-gray-600">{evento.descripcion}</td>
-                  <td className="px-4 py-4 text-sm font-medium text-gray-700">{evento.timestamp}</td>
+                  <td className="px-4 py-4 text-sm text-gray-700">{evento.origen}</td>
+                  <td className="px-4 py-4 text-sm text-gray-700">{evento.descripcion}</td>
+                  <td className="px-4 py-4 text-sm text-gray-700">{evento.timestamp}</td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={4} className="px-4 py-10 text-center text-sm font-medium text-gray-500">
+                <td colSpan={4} className="px-4 py-10 text-center text-sm text-gray-500">
                   No se encontraron eventos para los filtros aplicados
                 </td>
               </tr>

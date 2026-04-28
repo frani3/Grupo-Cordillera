@@ -15,6 +15,12 @@ const VALID_CREDENTIALS = {
   'admin@cordillera.cl': { password: '1234', role: 'ADMINISTRADOR' },
 };
 
+const loginFeatures = [
+  'Monitorea integraciones y estados críticos en tiempo real',
+  'Consulta indicadores, datos y reportes en una sola experiencia',
+  'Gestiona usuarios y auditoria con una vista unificada',
+];
+
 function normalizeRole(role) {
   const value = String(role ?? '').trim().toLowerCase();
 
@@ -195,58 +201,74 @@ function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-md rounded-[2rem] border border-gray-200 bg-white p-8 shadow-sm"
-      >
-        <p className="text-xs font-bold uppercase tracking-[0.3em] text-primary-600">Acceso seguro</p>
-        <h1 className="mt-3 text-3xl font-black tracking-tight text-gray-900">Iniciar sesión</h1>
-        <p className="mt-2 text-sm leading-6 text-gray-600">Ingresa para acceder al dashboard protegido.</p>
+    <div className="flex min-h-screen flex-col bg-gray-50 lg:flex-row">
+      <div className="flex w-full items-center justify-center bg-white px-6 py-10 lg:w-2/5 lg:px-10">
+        <form onSubmit={handleSubmit} className="w-full max-w-md">
+          <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary-600 text-lg font-black text-white shadow-sm">
+              GC
+            </div>
+            <div className="mt-6 w-full">
+              <h1 className="text-4xl font-black tracking-tight text-gray-900">Bienvenido</h1>
+              <p className="mt-2 text-sm text-gray-500">Inicia sesión en tu cuenta</p>
+            </div>
+          </div>
 
-        <label className="mt-6 block text-sm font-semibold text-gray-700">
-          Email
-          <input
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            className="mt-2 w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-primary-600"
-            placeholder="correo@cordillera.cl"
-            autoComplete="email"
-          />
-        </label>
+          <div className="mt-8 space-y-4">
+            <label className="block text-sm font-semibold text-gray-700">
+              Email
+              <input
+                type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                className="mt-2 w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+                placeholder="correo@cordillera.cl"
+                autoComplete="email"
+              />
+            </label>
 
-        <label className="mt-4 block text-sm font-semibold text-gray-700">
-          Contraseña
-          <input
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            className="mt-2 w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-primary-600"
-            placeholder="Contraseña"
-            autoComplete="current-password"
-          />
-        </label>
+            <label className="block text-sm font-semibold text-gray-700">
+              Contraseña
+              <input
+                type="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                className="mt-2 w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+                placeholder="Contraseña"
+                autoComplete="current-password"
+              />
+            </label>
 
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="mt-6 w-full rounded-2xl bg-primary-600 px-4 py-3 font-semibold text-white transition-colors hover:bg-primary-700 disabled:cursor-not-allowed disabled:bg-gray-400"
-        >
-          {isSubmitting ? 'Ingresando...' : 'Ingresar'}
-        </button>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full rounded-2xl bg-gradient-brand px-4 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70"
+            >
+              {isSubmitting ? 'Ingresando...' : 'Ingresar'}
+            </button>
 
-        {errorMessage ? <p className="mt-4 text-sm font-medium text-danger">{errorMessage}</p> : null}
+            {errorMessage ? <p className="text-sm font-medium text-danger">{errorMessage}</p> : null}
+          </div>
+        </form>
+      </div>
 
-        <div className="mt-6 rounded-2xl border border-gray-200 bg-gray-50 px-4 py-4 text-sm text-gray-700">
-          <p className="text-xs font-bold uppercase tracking-[0.22em] text-gray-500">Credenciales de prueba</p>
-          <div className="mt-3 space-y-2 font-mono text-xs leading-5 text-gray-600">
-            <p>ejecutivo@cordillera.cl / 1234</p>
-            <p>analista@cordillera.cl / 1234</p>
-            <p>admin@cordillera.cl / 1234</p>
+      <div className="relative flex w-full items-center justify-center overflow-hidden bg-gradient-brand px-8 py-12 text-white lg:w-3/5 lg:px-16">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_32%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.12),transparent_28%)]" />
+        <div className="relative max-w-2xl">
+          <p className="text-xs font-semibold uppercase tracking-[0.4em] text-white/70">Grupo Cordillera</p>
+          <h2 className="mt-4 text-5xl font-black tracking-tight">Grupo Cordillera</h2>
+          <p className="mt-3 text-lg text-white/80">Plataforma de Monitoreo Inteligente</p>
+
+          <div className="mt-10 space-y-4">
+            {loginFeatures.map((feature) => (
+              <div key={feature} className="flex items-start gap-4 rounded-2xl border border-white/15 bg-white/10 px-5 py-4 backdrop-blur-sm">
+                <span className="mt-1 h-3 w-3 rounded-full bg-white" aria-hidden="true" />
+                <p className="text-sm leading-6 text-white/90">{feature}</p>
+              </div>
+            ))}
           </div>
         </div>
-      </form>
+      </div>
     </div>
   );
 }
@@ -262,7 +284,7 @@ function AccesoDenegadoPage() {
         </p>
         <Link
           to="/login"
-          className="mt-6 inline-flex rounded-2xl bg-primary-600 px-4 py-3 font-semibold text-white transition-colors hover:bg-primary-700"
+          className="mt-6 inline-flex rounded-lg bg-gradient-brand px-4 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
         >
           Volver al login
         </Link>
