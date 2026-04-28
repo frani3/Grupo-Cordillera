@@ -68,68 +68,68 @@ export default function FormularioUsuario({ onCrearUsuario }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5 rounded-[1.75rem] border border-slate-200 bg-white p-6 shadow-sm">
+    <form onSubmit={handleSubmit} className="space-y-5 rounded-[1.75rem] border border-gray-200 bg-white p-6 shadow-sm">
       <div>
-        <p className="text-xs font-bold uppercase tracking-[0.28em] text-slate-400">Alta de usuario</p>
-        <h3 className="mt-2 text-2xl font-black tracking-tight text-slate-900">Nuevo usuario</h3>
+        <p className="text-xs font-bold uppercase tracking-[0.28em] text-gray-400">Alta de usuario</p>
+        <h3 className="mt-2 text-2xl font-black tracking-tight text-gray-900">Nuevo usuario</h3>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
-        <label className="block text-sm font-semibold text-slate-700 md:col-span-2">
+        <label className="block text-sm font-semibold text-gray-700 md:col-span-2">
           Nombre completo
           <input
             type="text"
             value={formulario.nombre}
             onChange={handleChange('nombre')}
-            className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-[#1E5FA8]"
+            className="mt-2 w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-primary-600"
             placeholder="Nombre y apellido"
           />
-          {errores.nombre ? <span className="mt-2 block text-xs font-medium text-rose-600">{errores.nombre}</span> : null}
+          {errores.nombre ? <span className="mt-2 block text-xs font-medium text-danger">{errores.nombre}</span> : null}
         </label>
 
-        <label className="block text-sm font-semibold text-slate-700">
+        <label className="block text-sm font-semibold text-gray-700">
           Email
           <input
             type="email"
             value={formulario.email}
             onChange={handleChange('email')}
-            className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-[#1E5FA8]"
+            className="mt-2 w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-primary-600"
             placeholder="correo@cordillera.cl"
           />
-          {errores.email ? <span className="mt-2 block text-xs font-medium text-rose-600">{errores.email}</span> : null}
+          {errores.email ? <span className="mt-2 block text-xs font-medium text-danger">{errores.email}</span> : null}
         </label>
 
-        <label className="block text-sm font-semibold text-slate-700">
+        <label className="block text-sm font-semibold text-gray-700">
           Contraseña temporal
           <input
             type="password"
             value={formulario.contrasenaTemporal}
             onChange={handleChange('contrasenaTemporal')}
-            className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-[#1E5FA8]"
+            className="mt-2 w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-primary-600"
             placeholder="Mínimo 4 caracteres"
           />
-          {errores.contrasenaTemporal ? <span className="mt-2 block text-xs font-medium text-rose-600">{errores.contrasenaTemporal}</span> : null}
+          {errores.contrasenaTemporal ? <span className="mt-2 block text-xs font-medium text-danger">{errores.contrasenaTemporal}</span> : null}
         </label>
 
-        <label className="block text-sm font-semibold text-slate-700 md:col-span-2">
+        <label className="block text-sm font-semibold text-gray-700 md:col-span-2">
           Rol
           <select
             value={formulario.rol}
             onChange={handleChange('rol')}
-            className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-[#1E5FA8]"
+            className="mt-2 w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-primary-600"
           >
             <option value="EJECUTIVO">EJECUTIVO</option>
             <option value="ANALISTA">ANALISTA</option>
             <option value="ADMINISTRADOR">ADMINISTRADOR</option>
           </select>
-          {errores.rol ? <span className="mt-2 block text-xs font-medium text-rose-600">{errores.rol}</span> : null}
+          {errores.rol ? <span className="mt-2 block text-xs font-medium text-danger">{errores.rol}</span> : null}
         </label>
       </div>
 
       <button
         type="submit"
         disabled={enviando}
-        className="rounded-2xl bg-[#1E5FA8] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#174a83] disabled:cursor-not-allowed disabled:bg-slate-400"
+        className="rounded-2xl bg-primary-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-700 disabled:cursor-not-allowed disabled:bg-gray-400"
       >
         {enviando ? 'Creando...' : 'Crear usuario'}
       </button>

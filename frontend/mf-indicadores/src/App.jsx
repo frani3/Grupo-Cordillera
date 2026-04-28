@@ -57,20 +57,20 @@ export default function App() {
   return (
     <section className="space-y-6">
       <div className="space-y-2">
-        <h2 className="text-3xl font-black tracking-tight text-slate-900">Indicadores KPI</h2>
-        <p className="max-w-3xl text-sm leading-6 text-slate-600">
+        <h2 className="text-3xl font-black tracking-tight text-gray-900">Indicadores KPI</h2>
+        <p className="max-w-3xl text-sm leading-6 text-gray-600">
           Vista consolidada de los principales indicadores del negocio con datos simulados mientras el backend está disponible.
         </p>
       </div>
 
       {error ? (
-        <div className="rounded-3xl border border-rose-200 bg-rose-50 px-5 py-4 text-sm font-medium text-rose-700">
+        <div className="rounded-3xl border border-danger/20 bg-danger/10 px-5 py-4 text-sm font-medium text-danger">
           No se pudo cargar los indicadores. Intenta refrescar la página.
         </div>
       ) : null}
 
       {hasStaleData ? (
-        <div className="rounded-3xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm font-semibold text-amber-800">
+        <div className="rounded-3xl border border-warning/20 bg-warning/10 px-5 py-4 text-sm font-semibold text-warning">
           ⚠️ Uno o más indicadores muestran datos desfasados por falla en sistemas de integración
         </div>
       ) : null}

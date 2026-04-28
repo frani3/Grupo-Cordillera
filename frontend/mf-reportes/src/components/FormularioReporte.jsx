@@ -70,20 +70,20 @@ export default function FormularioReporte({ onGenerado, onError }) {
   };
 
   return (
-    <section className="space-y-4 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <section className="space-y-4 rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
       <div>
-        <p className="text-xs font-bold uppercase tracking-[0.28em] text-slate-400">Generación</p>
-        <h3 className="mt-2 text-2xl font-black tracking-tight text-slate-900">Crear nuevo reporte</h3>
+        <p className="text-xs font-bold uppercase tracking-[0.28em] text-gray-400">Generación</p>
+        <h3 className="mt-2 text-2xl font-black tracking-tight text-gray-900">Crear nuevo reporte</h3>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5">
         <div className="grid gap-4 lg:grid-cols-2">
-          <label className="block text-sm font-semibold text-slate-700">
+          <label className="block text-sm font-semibold text-gray-700">
             Tipo de reporte
             <select
               value={form.tipo}
               onChange={(event) => update('tipo', event.target.value)}
-              className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-[#C96A00]"
+              className="mt-2 w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-primary-600"
             >
               <option value="RESUMEN_MENSUAL">RESUMEN_MENSUAL</option>
               <option value="COMPARATIVO_HISTORICO">COMPARATIVO_HISTORICO</option>
@@ -92,12 +92,12 @@ export default function FormularioReporte({ onGenerado, onError }) {
 
           {form.tipo === 'RESUMEN_MENSUAL' ? (
             <div className="grid gap-4 sm:grid-cols-2">
-              <label className="block text-sm font-semibold text-slate-700">
+              <label className="block text-sm font-semibold text-gray-700">
                 Mes
                 <select
                   value={form.mes}
                   onChange={(event) => update('mes', event.target.value)}
-                  className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-[#C96A00]"
+                  className="mt-2 w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-primary-600"
                 >
                   {MONTHS.map((month) => (
                     <option key={month.value} value={month.value}>
@@ -107,12 +107,12 @@ export default function FormularioReporte({ onGenerado, onError }) {
                 </select>
               </label>
 
-              <label className="block text-sm font-semibold text-slate-700">
+              <label className="block text-sm font-semibold text-gray-700">
                 Año
                 <select
                   value={form.anio}
                   onChange={(event) => update('anio', event.target.value)}
-                  className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-[#C96A00]"
+                  className="mt-2 w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-primary-600"
                 >
                   {YEARS.map((year) => (
                     <option key={year} value={year}>
@@ -123,51 +123,51 @@ export default function FormularioReporte({ onGenerado, onError }) {
               </label>
             </div>
           ) : (
-            <div className="space-y-4 rounded-3xl border border-slate-200 bg-slate-50 p-4 lg:col-span-2">
+            <div className="space-y-4 rounded-3xl border border-gray-200 bg-gray-50 p-4 lg:col-span-2">
               <div className="grid gap-4 lg:grid-cols-2">
-                <div className="space-y-3 rounded-2xl border border-white bg-white p-4 shadow-sm">
-                  <p className="text-xs font-bold uppercase tracking-[0.28em] text-[#C96A00]">Período 1</p>
+                <div className="space-y-3 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+                  <p className="text-xs font-bold uppercase tracking-[0.28em] text-primary-600">Período 1</p>
                   <div className="grid gap-4 sm:grid-cols-2">
-                    <label className="block text-sm font-semibold text-slate-700">
+                    <label className="block text-sm font-semibold text-gray-700">
                       Fecha desde
                       <input
                         type="date"
                         value={form.periodo1Desde}
                         onChange={(event) => update('periodo1Desde', event.target.value)}
-                        className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-[#C96A00]"
+                        className="mt-2 w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-primary-600"
                       />
                     </label>
-                    <label className="block text-sm font-semibold text-slate-700">
+                    <label className="block text-sm font-semibold text-gray-700">
                       Fecha hasta
                       <input
                         type="date"
                         value={form.periodo1Hasta}
                         onChange={(event) => update('periodo1Hasta', event.target.value)}
-                        className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-[#C96A00]"
+                        className="mt-2 w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-primary-600"
                       />
                     </label>
                   </div>
                 </div>
 
-                <div className="space-y-3 rounded-2xl border border-white bg-white p-4 shadow-sm">
-                  <p className="text-xs font-bold uppercase tracking-[0.28em] text-[#C96A00]">Período 2</p>
+                <div className="space-y-3 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm">
+                  <p className="text-xs font-bold uppercase tracking-[0.28em] text-primary-600">Período 2</p>
                   <div className="grid gap-4 sm:grid-cols-2">
-                    <label className="block text-sm font-semibold text-slate-700">
+                    <label className="block text-sm font-semibold text-gray-700">
                       Fecha desde
                       <input
                         type="date"
                         value={form.periodo2Desde}
                         onChange={(event) => update('periodo2Desde', event.target.value)}
-                        className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-[#C96A00]"
+                        className="mt-2 w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-primary-600"
                       />
                     </label>
-                    <label className="block text-sm font-semibold text-slate-700">
+                    <label className="block text-sm font-semibold text-gray-700">
                       Fecha hasta
                       <input
                         type="date"
                         value={form.periodo2Hasta}
                         onChange={(event) => update('periodo2Hasta', event.target.value)}
-                        className="mt-2 w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-[#C96A00]"
+                        className="mt-2 w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-primary-600"
                       />
                     </label>
                   </div>
@@ -180,7 +180,7 @@ export default function FormularioReporte({ onGenerado, onError }) {
         <button
           type="submit"
           disabled={generando}
-          className="inline-flex items-center gap-3 rounded-2xl bg-[#C96A00] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#a75700] disabled:cursor-not-allowed disabled:bg-slate-400"
+          className="inline-flex items-center gap-3 rounded-2xl bg-primary-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-700 disabled:cursor-not-allowed disabled:bg-gray-400"
         >
           {generando ? (
             <>

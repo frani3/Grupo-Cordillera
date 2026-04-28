@@ -102,11 +102,11 @@ export default function App() {
     <DetalleReporte reporte={reporteSeleccionado} onVolver={volverALista} />
   ) : (
     <div className="space-y-8 pb-8">
-      <section className="space-y-4 rounded-3xl border border-white/70 bg-white/85 p-6 shadow-[0_24px_60px_rgba(16,24,40,0.08)] backdrop-blur">
+      <section className="space-y-4 rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.4em] text-[#C96A00]">Grupo Cordillera</p>
-          <h2 className="mt-3 text-4xl font-black tracking-tight text-slate-900">Gestión de reportes</h2>
-          <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-600">
+          <p className="text-xs font-bold uppercase tracking-[0.4em] text-primary-600">Grupo Cordillera</p>
+          <h2 className="mt-3 text-4xl font-black tracking-tight text-gray-900">Gestión de reportes</h2>
+          <p className="mt-3 max-w-3xl text-sm leading-7 text-gray-600">
             Genera y consulta reportes mockeados de forma aislada mientras el backend queda listo.
           </p>
         </div>
@@ -124,7 +124,7 @@ export default function App() {
   return (
     <>
       {cargandoDetalle ? (
-        <div className="rounded-3xl border border-white/70 bg-white/85 p-6 text-sm font-semibold text-slate-600 shadow-[0_24px_60px_rgba(16,24,40,0.08)] backdrop-blur">
+        <div className="rounded-3xl border border-gray-200 bg-white p-6 text-sm font-semibold text-gray-600 shadow-sm">
           Cargando detalle del reporte...
         </div>
       ) : (

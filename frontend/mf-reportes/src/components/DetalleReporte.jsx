@@ -117,6 +117,7 @@ export default function DetalleReporte({ reporte, onVolver }) {
           const current = reporte.datos[key];
           const previous = reporte.datos.comparacionMesAnterior[key];
           const { delta, improved } = createComparisonDelta(current, previous, config.invertido);
+
           return [
             config.label,
             formatValue(current, config.format),
@@ -141,7 +142,7 @@ export default function DetalleReporte({ reporte, onVolver }) {
           formatValue(kpi.valorPeriodo2, getComparativeFormat(kpi.nombre)),
           formatSignedDelta(kpi.diferenciaAbsoluta, getComparativeFormat(kpi.nombre)),
           `${kpi.diferenciaPorcentual}%`,
-        ].map(csvEscape).join(',')
+        ].map(csvEscape).join(','),
       ),
     ];
 
@@ -150,12 +151,12 @@ export default function DetalleReporte({ reporte, onVolver }) {
 
   if (isResumen) {
     return (
-      <section className="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <section className="space-y-6 rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.28em] text-slate-400">Detalle</p>
-            <h3 className="mt-2 text-3xl font-black tracking-tight text-slate-900">{reporte.periodo}</h3>
-            <p className="mt-2 text-sm text-slate-500">
+            <p className="text-xs font-bold uppercase tracking-[0.28em] text-gray-400">Detalle</p>
+            <h3 className="mt-2 text-3xl font-black tracking-tight text-gray-900">{reporte.periodo}</h3>
+            <p className="mt-2 text-sm text-gray-500">
               Generado por {reporte.usuarioQueGenero} · {new Intl.DateTimeFormat('es-CL', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(reporte.fechaGeneracion))}
             </p>
           </div>
@@ -164,14 +165,14 @@ export default function DetalleReporte({ reporte, onVolver }) {
             <button
               type="button"
               onClick={handleExportCsv}
-              className="rounded-2xl border border-[#C96A00] bg-white px-4 py-2 text-sm font-semibold text-[#C96A00] transition-colors hover:bg-[#FFF3E6]"
+              className="rounded-2xl border border-primary-200 bg-white px-4 py-2 text-sm font-semibold text-primary-700 transition-colors hover:bg-primary-50"
             >
               Exportar CSV
             </button>
             <button
               type="button"
               onClick={onVolver}
-              className="rounded-2xl bg-[#C96A00] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#a75700]"
+              className="rounded-2xl bg-primary-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-700"
             >
               Volver
             </button>
@@ -183,22 +184,22 @@ export default function DetalleReporte({ reporte, onVolver }) {
             const current = reporte.datos[key];
             const previous = reporte.datos.comparacionMesAnterior[key];
             const { delta, improved } = createComparisonDelta(current, previous, config.invertido);
-            const colorClass = improved ? 'text-emerald-700' : 'text-rose-700';
-            const backgroundClass = improved ? 'bg-emerald-50 border-emerald-200' : 'bg-rose-50 border-rose-200';
+            const colorClass = improved ? 'text-success' : 'text-danger';
+            const backgroundClass = improved ? 'bg-success/10 border-success/20' : 'bg-danger/10 border-danger/20';
 
             return (
               <article key={key} className={`rounded-3xl border p-5 ${backgroundClass}`}>
-                <p className="text-xs font-bold uppercase tracking-[0.24em] text-slate-400">{config.label}</p>
-                <p className="mt-3 text-3xl font-black tracking-tight text-slate-900">{formatValue(current, config.format)}</p>
+                <p className="text-xs font-bold uppercase tracking-[0.24em] text-gray-400">{config.label}</p>
+                <p className="mt-3 text-3xl font-black tracking-tight text-gray-900">{formatValue(current, config.format)}</p>
                 <p className={`mt-2 text-sm font-semibold ${colorClass}`}>{formatSignedDelta(delta, config.format)} vs mes anterior</p>
-                <p className="mt-2 text-sm text-slate-600">Mes anterior: {formatValue(previous, config.format)}</p>
+                <p className="mt-2 text-sm text-gray-600">Mes anterior: {formatValue(previous, config.format)}</p>
               </article>
             );
           })}
         </div>
 
-        <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
-          <h4 className="mb-4 text-sm font-bold uppercase tracking-[0.24em] text-slate-500">Comparación visual</h4>
+        <div className="rounded-3xl border border-gray-200 bg-gray-50 p-4">
+          <h4 className="mb-4 text-sm font-bold uppercase tracking-[0.24em] text-gray-500">Comparación visual</h4>
           <div className="h-[320px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={resumenChartData} margin={{ top: 10, right: 20, left: 0, bottom: 20 }}>
@@ -207,7 +208,7 @@ export default function DetalleReporte({ reporte, onVolver }) {
                 <YAxis tickFormatter={(value) => new Intl.NumberFormat('es-CL', { maximumFractionDigits: 0 }).format(value)} />
                 <Tooltip formatter={(value) => new Intl.NumberFormat('es-CL', { maximumFractionDigits: 0 }).format(value)} />
                 <Bar dataKey="anterior" name="Mes anterior" fill="#94A3B8" radius={[8, 8, 0, 0]} />
-                <Bar dataKey="actual" name="Mes actual" fill="#C96A00" radius={[8, 8, 0, 0]} />
+                <Bar dataKey="actual" name="Mes actual" fill="#2563EB" radius={[8, 8, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -217,12 +218,12 @@ export default function DetalleReporte({ reporte, onVolver }) {
   }
 
   return (
-    <section className="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+    <section className="space-y-6 rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.28em] text-slate-400">Detalle</p>
-          <h3 className="mt-2 text-3xl font-black tracking-tight text-slate-900">{reporte.periodo}</h3>
-          <p className="mt-2 text-sm text-slate-500">
+          <p className="text-xs font-bold uppercase tracking-[0.28em] text-gray-400">Detalle</p>
+          <h3 className="mt-2 text-3xl font-black tracking-tight text-gray-900">{reporte.periodo}</h3>
+          <p className="mt-2 text-sm text-gray-500">
             {reporte.datos.periodo1} · {reporte.datos.periodo2}
           </p>
         </div>
@@ -231,44 +232,44 @@ export default function DetalleReporte({ reporte, onVolver }) {
           <button
             type="button"
             onClick={handleExportCsv}
-            className="rounded-2xl border border-[#C96A00] bg-white px-4 py-2 text-sm font-semibold text-[#C96A00] transition-colors hover:bg-[#FFF3E6]"
+            className="rounded-2xl border border-primary-200 bg-white px-4 py-2 text-sm font-semibold text-primary-700 transition-colors hover:bg-primary-50"
           >
             Exportar CSV
           </button>
           <button
             type="button"
             onClick={onVolver}
-            className="rounded-2xl bg-[#C96A00] px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-[#a75700]"
+            className="rounded-2xl bg-primary-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-primary-700"
           >
             Volver
           </button>
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
-        <table className="min-w-full divide-y divide-slate-200">
-          <thead className="bg-slate-50">
+      <div className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
             <tr>
-              <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-[0.2em] text-slate-500">KPI</th>
-              <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-[0.2em] text-slate-500">Período 1</th>
-              <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-[0.2em] text-slate-500">Período 2</th>
-              <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-[0.2em] text-slate-500">Diferencia</th>
-              <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-[0.2em] text-slate-500">Variación %</th>
+              <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-[0.2em] text-gray-500">KPI</th>
+              <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Período 1</th>
+              <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Período 2</th>
+              <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Diferencia</th>
+              <th className="px-4 py-3 text-left text-xs font-bold uppercase tracking-[0.2em] text-gray-500">Variación %</th>
             </tr>
           </thead>
 
-          <tbody className="divide-y divide-slate-100 bg-white">
+          <tbody className="divide-y divide-gray-100 bg-white">
             {reporte.datos.kpis.map((kpi) => {
               const positive = kpi.diferenciaPorcentual >= 0;
-              const variationClass = positive ? 'text-emerald-700' : 'text-rose-700';
+              const variationClass = positive ? 'text-success' : 'text-danger';
               const format = getComparativeFormat(kpi.nombre);
 
               return (
-                <tr key={kpi.nombre} className="align-top hover:bg-slate-50/80">
-                  <td className="px-4 py-4 text-sm font-semibold text-slate-900">{kpi.nombre}</td>
-                  <td className="px-4 py-4 text-sm text-slate-600">{formatValue(kpi.valorPeriodo1, format)}</td>
-                  <td className="px-4 py-4 text-sm text-slate-600">{formatValue(kpi.valorPeriodo2, format)}</td>
-                  <td className="px-4 py-4 text-sm font-semibold text-slate-700">{formatSignedDelta(kpi.diferenciaAbsoluta, format)}</td>
+                <tr key={kpi.nombre} className="align-top hover:bg-gray-50/80">
+                  <td className="px-4 py-4 text-sm font-semibold text-gray-900">{kpi.nombre}</td>
+                  <td className="px-4 py-4 text-sm text-gray-600">{formatValue(kpi.valorPeriodo1, format)}</td>
+                  <td className="px-4 py-4 text-sm text-gray-600">{formatValue(kpi.valorPeriodo2, format)}</td>
+                  <td className="px-4 py-4 text-sm font-semibold text-gray-700">{formatSignedDelta(kpi.diferenciaAbsoluta, format)}</td>
                   <td className={`px-4 py-4 text-sm font-bold ${variationClass}`}>{kpi.diferenciaPorcentual > 0 ? '+' : ''}{kpi.diferenciaPorcentual}%</td>
                 </tr>
               );
@@ -277,8 +278,8 @@ export default function DetalleReporte({ reporte, onVolver }) {
         </table>
       </div>
 
-      <div className="rounded-3xl border border-slate-200 bg-slate-50 p-4">
-        <h4 className="mb-4 text-sm font-bold uppercase tracking-[0.24em] text-slate-500">Comparación visual</h4>
+      <div className="rounded-3xl border border-gray-200 bg-gray-50 p-4">
+        <h4 className="mb-4 text-sm font-bold uppercase tracking-[0.24em] text-gray-500">Comparación visual</h4>
         <div className="h-[320px] w-full">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={comparativeChartData} margin={{ top: 10, right: 20, left: 0, bottom: 20 }}>
@@ -289,7 +290,7 @@ export default function DetalleReporte({ reporte, onVolver }) {
               <Bar dataKey="periodo1" name={reporte.datos.periodo1} fill="#94A3B8" radius={[8, 8, 0, 0]} />
               <Bar dataKey="periodo2" name={reporte.datos.periodo2} radius={[8, 8, 0, 0]}>
                 {comparativeChartData.map((entry) => (
-                  <Cell key={entry.nombre} fill={entry.diferenciaPorcentual >= 0 ? '#16A34A' : '#DC2626'} />
+                  <Cell key={entry.nombre} fill={entry.diferenciaPorcentual >= 0 ? '#2563EB' : '#DC2626'} />
                 ))}
               </Bar>
             </BarChart>

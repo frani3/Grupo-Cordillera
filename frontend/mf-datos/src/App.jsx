@@ -102,36 +102,36 @@ export default function App({ rolUsuario }) {
 
   return (
     <main className="space-y-8 pb-8">
-      <section className="space-y-4 rounded-3xl border border-white/70 bg-white/85 p-6 shadow-[0_24px_60px_rgba(16,24,40,0.08)] backdrop-blur">
+      <section className="space-y-4 rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.4em] text-[#1E5FA8]">Grupo Cordillera</p>
-            <h2 className="mt-3 text-4xl font-black tracking-tight text-slate-900">Gestión de datos organizacionales</h2>
-            <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-600">
+            <p className="text-xs font-bold uppercase tracking-[0.4em] text-primary-600">Grupo Cordillera</p>
+            <h2 className="mt-3 text-4xl font-black tracking-tight text-gray-900">Gestión de datos organizacionales</h2>
+            <p className="mt-3 max-w-3xl text-sm leading-7 text-gray-600">
               Consola de monitoreo para integrar POS, inventario, e-commerce, finanzas y clientes con información simulada.
             </p>
           </div>
 
-          <div className="rounded-full bg-[#1E5FA8]/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.22em] text-[#1E5FA8]">
+          <div className="rounded-full bg-primary-50 px-4 py-2 text-xs font-bold uppercase tracking-[0.22em] text-primary-700">
             Rol activo: {rolUsuario ?? 'Sin definir'}
           </div>
         </div>
 
         {mensajeError ? (
-          <div className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-medium text-rose-700">
+          <div className="rounded-2xl border border-danger/20 bg-danger/10 px-4 py-3 text-sm font-medium text-danger">
             {mensajeError}
           </div>
         ) : null}
       </section>
 
-      <section className="space-y-4 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <section className="space-y-4 rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
         <EstadoSistema estados={loadingEstados ? [] : estadoCircuitos} loading={loadingEstados} />
       </section>
 
-      <section className="space-y-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <section className="space-y-6 rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.28em] text-slate-400">Exploración de registros</p>
-          <h3 className="mt-2 text-2xl font-black tracking-tight text-slate-900">Consolidado de datos</h3>
+          <p className="text-xs font-bold uppercase tracking-[0.28em] text-gray-400">Exploración de registros</p>
+          <h3 className="mt-2 text-2xl font-black tracking-tight text-gray-900">Consolidado de datos</h3>
         </div>
 
         <FiltrosDatos
@@ -151,10 +151,10 @@ export default function App({ rolUsuario }) {
       </section>
 
       {rolUsuario === 'ADMINISTRADOR' ? (
-        <section className="space-y-4 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+        <section className="space-y-4 rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.28em] text-slate-400">Administración</p>
-            <h3 className="mt-2 text-2xl font-black tracking-tight text-slate-900">Historial de auditoría técnica</h3>
+            <p className="text-xs font-bold uppercase tracking-[0.28em] text-gray-400">Administración</p>
+            <h3 className="mt-2 text-2xl font-black tracking-tight text-gray-900">Historial de auditoría técnica</h3>
           </div>
 
           <TablaAuditoria rolUsuario={rolUsuario} />

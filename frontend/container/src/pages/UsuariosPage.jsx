@@ -14,16 +14,16 @@ import {
 
 function AccesoDenegado() {
   return (
-    <div className="flex min-h-[calc(100vh-112px)] items-center justify-center rounded-3xl border border-rose-200 bg-rose-50 px-4 text-center">
-      <div className="max-w-lg rounded-[1.75rem] bg-white p-8 shadow-sm">
-        <p className="text-xs font-bold uppercase tracking-[0.3em] text-rose-400">Acceso denegado</p>
-        <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-900">No tienes permisos para continuar</h2>
-        <p className="mt-3 text-sm leading-6 text-slate-600">
+    <div className="flex min-h-[calc(100vh-112px)] items-center justify-center rounded-3xl border border-gray-200 bg-white px-4 text-center shadow-sm">
+      <div className="max-w-lg rounded-[1.75rem] border border-gray-200 bg-white p-8 shadow-sm">
+        <p className="text-xs font-bold uppercase tracking-[0.3em] text-primary-600">Acceso denegado</p>
+        <h2 className="mt-3 text-3xl font-black tracking-tight text-gray-900">No tienes permisos para continuar</h2>
+        <p className="mt-3 text-sm leading-6 text-gray-600">
           La gestión de usuarios solo está disponible para administradores del sistema.
         </p>
         <Link
           to="/login"
-          className="mt-6 inline-flex rounded-2xl bg-[#1E5FA8] px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#174a83]"
+          className="mt-6 inline-flex rounded-2xl bg-primary-600 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-700"
         >
           Volver al login
         </Link>
@@ -142,12 +142,12 @@ export default function UsuariosPage() {
 
   return (
     <div className="space-y-8 pb-8">
-      <section className="space-y-4 rounded-3xl border border-white/70 bg-white/85 p-6 shadow-[0_24px_60px_rgba(16,24,40,0.08)] backdrop-blur">
+      <section className="space-y-4 rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.4em] text-[#1E5FA8]">Administración</p>
-            <h2 className="mt-3 text-4xl font-black tracking-tight text-slate-900">Gestión de usuarios</h2>
-            <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-600">
+            <p className="text-xs font-bold uppercase tracking-[0.4em] text-primary-600">Administración</p>
+            <h2 className="mt-3 text-4xl font-black tracking-tight text-gray-900">Gestión de usuarios</h2>
+            <p className="mt-3 max-w-3xl text-sm leading-7 text-gray-600">
               Crea usuarios, cambia roles y administra su estado con datos completamente locales.
             </p>
           </div>
@@ -155,13 +155,13 @@ export default function UsuariosPage() {
           <button
             type="button"
             onClick={() => setMostrarFormulario((value) => !value)}
-            className="rounded-2xl bg-[#1E5FA8] px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#174a83]"
+            className="rounded-2xl bg-primary-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-700"
           >
             {mostrarFormulario ? 'Ocultar formulario' : 'Nuevo usuario'}
           </button>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium text-slate-600">
+        <div className="rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm font-medium text-gray-600">
           Usuarios cargados: {usuariosConteo}
         </div>
       </section>
@@ -170,14 +170,14 @@ export default function UsuariosPage() {
         <FormularioUsuario onCrearUsuario={handleCrearUsuario} />
       ) : null}
 
-      <section className="space-y-4 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+      <section className="space-y-4 rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.28em] text-slate-400">Listado</p>
-          <h3 className="mt-2 text-2xl font-black tracking-tight text-slate-900">Usuarios del sistema</h3>
+          <p className="text-xs font-bold uppercase tracking-[0.28em] text-gray-400">Listado</p>
+          <h3 className="mt-2 text-2xl font-black tracking-tight text-gray-900">Usuarios del sistema</h3>
         </div>
 
         {cargando ? (
-          <div className="flex min-h-48 items-center justify-center rounded-3xl border border-dashed border-slate-300 bg-slate-50">
+          <div className="flex min-h-48 items-center justify-center rounded-3xl border border-dashed border-gray-300 bg-gray-50">
             <Spinner />
           </div>
         ) : (

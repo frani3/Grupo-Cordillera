@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
 const estilos = {
-  success: 'border-emerald-200 bg-emerald-50 text-emerald-700',
-  error: 'border-rose-200 bg-rose-50 text-rose-700',
-  warning: 'border-amber-200 bg-amber-50 text-amber-700',
+  success: 'border-success/20 bg-success/10 text-success',
+  error: 'border-danger/20 bg-danger/10 text-danger',
+  warning: 'border-warning/20 bg-warning/10 text-warning',
 };
 
 export default function Toast({ mensaje = '', tipo = 'success', visible = false }) {
@@ -28,7 +28,7 @@ export default function Toast({ mensaje = '', tipo = 'success', visible = false 
 
   return (
     <div className="fixed right-6 top-6 z-50 w-[min(92vw,360px)]">
-      <div role="alert" className={`rounded-2xl border px-4 py-3 text-sm font-medium shadow-2xl backdrop-blur ${classes}`}>
+      <div role="alert" className={`rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm font-medium shadow-sm ${classes}`}>
         {mensaje}
       </div>
     </div>

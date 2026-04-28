@@ -1,13 +1,13 @@
 export const theme = {
   colors: {
-    primary: '#1E5FA8',
-    secondary: '#C96A00',
-    success: '#1A7A4A',
-    danger: '#A32D2D',
-    warning: '#856404',
+    primary: '#2563EB',
+    secondary: '#6B7280',
+    success: '#16A34A',
+    danger: '#DC2626',
+    warning: '#CA8A04',
   },
   typography: {
-    base: 'Arial, sans-serif',
+    base: 'Inter, sans-serif',
   },
   spacing: 8,
 };

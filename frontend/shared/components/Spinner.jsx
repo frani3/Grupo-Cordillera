@@ -3,10 +3,10 @@ import React from 'react';
 export default function Spinner() {
   return React.createElement(
     'div',
-    { className: 'inline-flex items-center gap-3 text-[#1E5FA8]' },
+    { className: 'inline-flex items-center gap-3 text-primary-600' },
     React.createElement('span', {
-      className: 'h-6 w-6 animate-spin rounded-full border-4 border-[#1E5FA8]/20 border-t-[#1E5FA8]',
+      className: 'h-5 w-5 animate-spin rounded-full border-2 border-gray-200 border-t-primary-600',
     }),
-    React.createElement('span', { className: 'text-sm font-semibold uppercase tracking-[0.18em]' }, 'Cargando')
+    React.createElement('span', { className: 'text-sm font-medium text-gray-600' }, 'Cargando')
   );
 }
