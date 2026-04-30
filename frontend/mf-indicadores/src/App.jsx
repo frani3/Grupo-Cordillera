@@ -1,93 +1,80 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import KpiCard from './components/KpiCard';
 import { getDashboard } from './services/kpiService';
 
 function KpiSkeleton() {
   return (
-    <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
+    <div className="flex flex-col gap-4 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm ring-1 ring-black/[0.03]">
       <div className="animate-pulse space-y-4">
-        <div className="h-4 w-32 rounded-full bg-slate-200" />
-        <div className="h-10 w-2/3 rounded-2xl bg-slate-200" />
-        <div className="h-4 w-1/2 rounded-full bg-slate-200" />
-        <div className="h-5 w-24 rounded-full bg-slate-200" />
-        <div className="h-24 rounded-2xl bg-slate-100" />
+        <div className="flex items-start justify-between gap-3">
+          <div className="space-y-2">
+            <div className="h-4 w-20 rounded-md bg-slate-100" />
+            <div className="h-3.5 w-32 rounded bg-slate-100" />
+          </div>
+          <div className="h-6 w-20 rounded-full bg-slate-100" />
+        </div>
+        <div className="h-9 w-32 rounded-md bg-slate-100" />
+        <div className="h-3 w-24 rounded bg-slate-100" />
+        <div className="h-[60px] w-full rounded-lg bg-slate-50" />
+        <div className="h-3 w-44 rounded bg-slate-100" />
       </div>
     </div>
   );
 }
 
+// w-full + max-w-full ensure the micro-frontend never overflows the host container
 export default function App() {
-  const [dashboard, setDashboard] = useState(null);
+  const [kpis, setKpis] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
 
-    async function loadDashboard() {
-      try {
-        setLoading(true);
-        setError(false);
-        const data = await getDashboard();
-
+    getDashboard()
+      .then((data) => {
         if (!cancelled) {
-          setDashboard(data);
-        }
-      } catch {
-        if (!cancelled) {
-          setError(true);
-        }
-      } finally {
-        if (!cancelled) {
+          setKpis(data.kpis ?? []);
           setLoading(false);
         }
-      }
-    }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setError(true);
+          setLoading(false);
+        }
+      });
 
-    loadDashboard();
-
-    return () => {
-      cancelled = true;
-    };
+    return () => { cancelled = true; };
   }, []);
 
-  const kpis = dashboard?.kpis ?? [];
-  const hasStaleData = useMemo(() => kpis.some((kpi) => kpi.staleData), [kpis]);
-
   return (
-    <section className="space-y-6">
-      <div className="space-y-2">
-        <h2 className="text-3xl font-black tracking-tight text-gray-900">Indicadores KPI</h2>
-        <p className="max-w-3xl text-sm leading-6 text-gray-600">
-          Vista consolidada de los principales indicadores del negocio con datos simulados mientras el backend está disponible.
+    <section className="w-full max-w-full space-y-8">
+      {/* ── Page header ── */}
+      <div>
+        <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-blue-600">
+          Panel de Control
+        </p>
+        <h2 className="mt-1 text-2xl font-bold tracking-tight text-[#0F172A]">
+          Indicadores de Negocio
+        </h2>
+        <p className="mt-1 text-sm text-gray-500">
+          5 KPIs críticos · MS1 – MS5 · Últimos 7 días
         </p>
       </div>
 
-      {error ? (
-        <div className="rounded-3xl border border-danger/20 bg-danger/10 px-5 py-4 text-sm font-medium text-danger">
-          No se pudo cargar los indicadores. Intenta refrescar la página.
-        </div>
-      ) : null}
-
-      {hasStaleData ? (
-        <div className="rounded-3xl border border-warning/20 bg-warning/10 px-5 py-4 text-sm font-semibold text-warning">
-          ⚠️ Uno o más indicadores muestran datos desfasados por falla en sistemas de integración
-        </div>
-      ) : null}
-
-      {loading ? (
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-          <KpiSkeleton />
-          <KpiSkeleton />
-          <KpiSkeleton />
-        </div>
-      ) : error ? null : (
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {kpis.map((kpi) => (
-            <KpiCard key={kpi.id} kpi={kpi} />
-          ))}
+      {error && (
+        <div className="rounded-xl border border-red-100 bg-red-50 px-5 py-3 text-sm font-medium text-red-600">
+          No se pudieron cargar los indicadores. Intenta refrescar la página.
         </div>
       )}
+
+      {/* ── KPI grid ── */}
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
+        {loading
+          ? Array.from({ length: 5 }, (_, i) => <KpiSkeleton key={i} />)
+          : kpis.map((kpi) => <KpiCard key={kpi.id} kpi={kpi} />)}
+      </div>
     </section>
   );
 }

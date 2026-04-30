@@ -25,98 +25,148 @@ function buildHistorico({ targetValue, trend, amplitude, phase = 0, days = 90, d
     const currentDate = new Date(today);
     currentDate.setDate(today.getDate() - (days - 1 - index));
 
-    const oscillation = Math.sin(index / 4.7 + phase) * amplitude + Math.cos(index / 9.3 + phase) * (amplitude * 0.35);
+    const oscillation =
+      Math.sin(index / 4.7 + phase) * amplitude + Math.cos(index / 9.3 + phase) * (amplitude * 0.35);
     let valor = startingValue + trend * index + oscillation;
 
-    if (typeof min === 'number') {
-      valor = Math.max(min, valor);
-    }
-
-    if (typeof max === 'number') {
-      valor = Math.min(max, valor);
-    }
-
-    if (index === days - 1) {
-      valor = targetValue;
-    }
-
-    const parsedValue = decimals > 0 ? Number(valor.toFixed(decimals)) : Math.round(valor);
+    if (typeof min === 'number') valor = Math.max(min, valor);
+    if (typeof max === 'number') valor = Math.min(max, valor);
+    if (index === days - 1) valor = targetValue;
 
     historial.push({
       fecha: formatDate(currentDate),
       fechaCompleta: formatTime(currentDate),
-      valor: parsedValue,
+      valor: decimals > 0 ? Number(valor.toFixed(decimals)) : Math.round(valor),
     });
   }
 
   return historial;
 }
 
-const ventasHistorico = buildHistorico({
-  targetValue: 1250000,
-  trend: 2100,
-  amplitude: 38000,
+// MS1 · Ventas — % Cumplimiento de Meta (valor actual / meta ventas)
+const cumplimientoHistorico = buildHistorico({
+  targetValue: 83.3,
+  trend: 0.08,
+  amplitude: 4.5,
   phase: 0.8,
-  min: 700000,
-  max: 2050000,
+  decimals: 1,
+  min: 52,
+  max: 101,
 });
 
-const inventarioHistorico = buildHistorico({
-  targetValue: -12,
-  trend: 0.03,
-  amplitude: 2.6,
+// MS2 · Inventario — % Quiebre de Stock (SKUs sin stock / total SKUs)
+// Métrica invertida: menor es mejor. Meta ≤ 2 %, crítico > 7 %
+const quiebreStockHistorico = buildHistorico({
+  targetValue: 4.2,
+  trend: -0.01,
+  amplitude: 0.9,
   phase: 1.4,
-  min: -22,
-  max: 14,
+  decimals: 1,
+  min: 1.0,
+  max: 9.8,
 });
 
-const ticketHistorico = buildHistorico({
-  targetValue: 85000,
-  trend: 160,
-  amplitude: 2600,
+// MS3 · E-commerce — % Despachos a Tiempo (OTD)
+const otdHistorico = buildHistorico({
+  targetValue: 91.5,
+  trend: 0.06,
+  amplitude: 2.2,
   phase: 2.1,
-  min: 45000,
-  max: 155000,
+  decimals: 1,
+  min: 75,
+  max: 99,
+});
+
+// MS4 · Finanzas — EBITDA Mensual (CLP)
+const ebitdaHistorico = buildHistorico({
+  targetValue: 48500000,
+  trend: 95000,
+  amplitude: 3600000,
+  phase: 0.3,
+  min: 18000000,
+  max: 70000000,
+});
+
+// MS5 · Atención al Cliente — Tasa de Resolución en Primer Contacto
+const tasaResolucionHistorico = buildHistorico({
+  targetValue: 87.3,
+  trend: 0.05,
+  amplitude: 1.9,
+  phase: 1.7,
+  decimals: 1,
+  min: 70,
+  max: 98,
 });
 
 export const KPI_MOCK = [
   {
-    id: 'ventas-totales',
-    nombre: 'Ventas Totales',
-    valor: 1250000,
-    meta: 1500000,
-    umbralMin: 800000,
-    umbralMax: 2000000,
-    unidad: 'CLP',
-    staleData: false,
-    timestampUltimoValor: ventasHistorico[ventasHistorico.length - 1]?.fechaCompleta ?? '',
-    historico: ventasHistorico,
-    historico30dias: ventasHistorico.slice(-30),
-  },
-  {
-    id: 'variacion-inventario',
-    nombre: 'Variación de Inventario',
-    valor: -12,
-    meta: 0,
-    umbralMin: -20,
-    umbralMax: 10,
+    id: 'cumplimiento-meta',
+    nombre: '% Cumplimiento Meta',
+    microservicio: 'MS1 · Ventas',
+    valor: 83.3,
+    meta: 100,
+    umbralMin: 70,
+    umbralMax: 100,
     unidad: '%',
-    staleData: true,
-    timestampUltimoValor: inventarioHistorico[inventarioHistorico.length - 1]?.fechaCompleta ?? '',
-    historico: inventarioHistorico,
-    historico30dias: inventarioHistorico.slice(-30),
+    invertido: false,
+    staleData: false,
+    timestampUltimoValor: cumplimientoHistorico.at(-1)?.fechaCompleta ?? '',
+    historico: cumplimientoHistorico,
   },
   {
-    id: 'ticket-promedio',
-    nombre: 'Ticket Promedio',
-    valor: 85000,
-    meta: 75000,
-    umbralMin: 50000,
-    umbralMax: 150000,
-    unidad: 'CLP',
+    id: 'quiebre-stock',
+    nombre: '% Quiebre de Stock',
+    microservicio: 'MS2 · Inventario',
+    valor: 4.2,
+    meta: 2,      // óptimo: ≤ 2 %
+    umbralMin: 7, // crítico: > 7 %  (umbralMin reutilizado como umbral crítico para invertido)
+    umbralMax: 15,
+    unidad: '%',
+    invertido: true,
     staleData: false,
-    timestampUltimoValor: ticketHistorico[ticketHistorico.length - 1]?.fechaCompleta ?? '',
-    historico: ticketHistorico,
-    historico30dias: ticketHistorico.slice(-30),
+    timestampUltimoValor: quiebreStockHistorico.at(-1)?.fechaCompleta ?? '',
+    historico: quiebreStockHistorico,
+  },
+  {
+    id: 'otd-ecommerce',
+    nombre: '% Despachos a Tiempo',
+    microservicio: 'MS3 · E-commerce',
+    valor: 91.5,
+    meta: 95,
+    umbralMin: 85,
+    umbralMax: 100,
+    unidad: '%',
+    invertido: false,
+    staleData: true,
+    timestampUltimoValor: otdHistorico.at(-1)?.fechaCompleta ?? '',
+    historico: otdHistorico,
+  },
+  {
+    id: 'ebitda-mensual',
+    nombre: 'EBITDA Mensual',
+    microservicio: 'MS4 · Finanzas',
+    valor: 48500000,
+    meta: 55000000,
+    umbralMin: 35000000,
+    umbralMax: 80000000,
+    unidad: 'CLP',
+    invertido: false,
+    staleData: true,
+    timestampUltimoValor: ebitdaHistorico.at(-1)?.fechaCompleta ?? '',
+    historico: ebitdaHistorico,
+  },
+  {
+    id: 'tasa-resolucion',
+    nombre: 'Tasa de Resolución',
+    microservicio: 'MS5 · Atención',
+    valor: 87.3,
+    meta: 90,
+    umbralMin: 80,
+    umbralMax: 100,
+    unidad: '%',
+    invertido: false,
+    staleData: false,
+    timestampUltimoValor: tasaResolucionHistorico.at(-1)?.fechaCompleta ?? '',
+    historico: tasaResolucionHistorico,
   },
 ];

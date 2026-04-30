@@ -3,13 +3,54 @@
 @tailwind utilities;
 
 @layer base {
-	html,
-	body,
-	#root {
-		@apply h-full bg-gray-50 font-sans text-gray-900;
-	}
+  /* ── Font variable ──────────────────────────────────────────────────────── */
+  :root {
+    --font-principal: 'Inter', Arial, sans-serif;
+  }
 
-	body {
-		@apply antialiased;
-	}
+  /* ── Universal lock — no element escapes ───────────────────────────────── */
+  *,
+  *::before,
+  *::after {
+    font-family: var(--font-principal) !important;
+  }
+
+  /* ── Base elements ──────────────────────────────────────────────────────── */
+  html, body, #root,
+  div, span, p, a, li, label,
+  button, input, select, textarea {
+    font-family: var(--font-principal) !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: -0.01em;
+  }
+
+  /* ── Table elements — explicit !important per user spec ─────────────────── */
+  table, thead, tbody, tr, th, td,
+  .table-container *,
+  [class*="tabla"] * {
+    font-family: var(--font-principal) !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+  }
+
+  html,
+  body,
+  #root {
+    @apply h-full bg-gray-50 text-gray-900;
+    overflow: hidden;
+  }
+
+  body {
+    @apply antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 }
