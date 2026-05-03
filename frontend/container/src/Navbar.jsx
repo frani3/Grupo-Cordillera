@@ -7,25 +7,25 @@ export default function Navbar({ moduloActivo, email, onLogout }) {
 
         {/* Left — brand */}
         <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-sm font-black text-primary-600 shadow-sm">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-xs font-black text-primary-600 shadow-sm">
             GC
           </div>
-          <span className="text-base font-bold tracking-tight">Grupo Cordillera</span>
+          <span className="text-sm font-bold tracking-tight">Grupo Cordillera</span>
           {moduloActivo && (
             <>
               <span className="text-white/30">/</span>
-              <span className="text-sm font-medium text-white/70">{moduloActivo}</span>
+              <span className="text-xs font-medium text-white/70">{moduloActivo}</span>
             </>
           )}
         </div>
 
         {/* Right — user info */}
-        <div className="flex items-center gap-5 text-sm">
-          <span className="max-w-[180px] truncate font-medium text-white/80">{email}</span>
+        <div className="flex items-center gap-4">
+          <span className="max-w-[180px] truncate text-xs font-medium text-white/80">{email}</span>
           <button
             type="button"
             onClick={onLogout}
-            className="rounded-full border border-white/40 px-4 py-1.5 text-sm font-semibold text-white transition-colors hover:bg-white hover:text-primary-600"
+            className="rounded-full border border-white/40 px-3 py-1 text-xs font-semibold text-white transition-colors hover:bg-white hover:text-primary-600"
           >
             Cerrar sesión
           </button>

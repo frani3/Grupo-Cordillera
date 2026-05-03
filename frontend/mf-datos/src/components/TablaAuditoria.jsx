@@ -107,10 +107,10 @@ export default function TablaAuditoria({ rolUsuario }) {
         <table className="min-w-full border-separate border-spacing-0">
           <thead className="sticky top-0 z-10 bg-slate-50">
             <tr>
-              <th className="border-b border-slate-100 px-4 py-2.5 text-left text-[10px] font-semibold uppercase tracking-wider text-slate-500">Tipo de evento</th>
-              <th className="border-b border-slate-100 px-4 py-2.5 text-left text-[10px] font-semibold uppercase tracking-wider text-slate-500">Origen</th>
-              <th className="border-b border-slate-100 px-4 py-2.5 text-left text-[10px] font-semibold uppercase tracking-wider text-slate-500">Descripción</th>
-              <th className="border-b border-slate-100 px-4 py-2.5 text-left text-[10px] font-semibold uppercase tracking-wider text-slate-500">Timestamp</th>
+              <th className="border-b border-slate-100 px-4 py-2.5 text-left text-[10px] font-bold uppercase tracking-[0.22em] text-slate-400">Tipo de evento</th>
+              <th className="border-b border-slate-100 px-4 py-2.5 text-left text-[10px] font-bold uppercase tracking-[0.22em] text-slate-400">Origen</th>
+              <th className="border-b border-slate-100 px-4 py-2.5 text-left text-[10px] font-bold uppercase tracking-[0.22em] text-slate-400">Descripción</th>
+              <th className="border-b border-slate-100 px-4 py-2.5 text-left text-[10px] font-bold uppercase tracking-[0.22em] text-slate-400">Timestamp</th>
             </tr>
           </thead>
 

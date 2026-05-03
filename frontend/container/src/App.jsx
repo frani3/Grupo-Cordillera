@@ -184,88 +184,134 @@ function LoginPage() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     setIsSubmitting(true);
     setErrorMessage('');
-
     const success = await Promise.resolve(login(email, password));
     setIsSubmitting(false);
-
     if (!success) {
       setErrorMessage('Correo o contraseña incorrectos');
       return;
     }
-
     const nextPath = location.state?.from?.pathname ?? '/dashboard';
     navigate(nextPath, { replace: true });
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-gray-50 lg:flex-row">
-      <div className="flex w-full items-center justify-center bg-white px-6 py-10 lg:w-2/5 lg:px-10">
-        <form onSubmit={handleSubmit} className="w-full max-w-md">
-          <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary-600 text-lg font-black text-white shadow-sm">
+    <div className="flex min-h-screen bg-slate-50">
+
+      {/* ── Left — form panel ── */}
+      <div className="flex w-full items-center justify-center px-6 py-12 lg:w-[46%]">
+        <div className="w-full max-w-sm rounded-3xl border border-slate-100 bg-white p-8 shadow-2xl">
+
+          {/* Logo */}
+          <div className="flex justify-center">
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-brand text-sm font-black text-white shadow-md">
               GC
-            </div>
-            <div className="mt-6 w-full">
-              <h1 className="text-4xl font-black tracking-tight text-gray-900">Bienvenido</h1>
-              <p className="mt-2 text-sm text-gray-500">Inicia sesión en tu cuenta</p>
             </div>
           </div>
 
-          <div className="mt-8 space-y-4">
-            <label className="block text-sm font-semibold text-gray-700">
-              Email
+          {/* Heading */}
+          <div className="mt-5 text-center">
+            <h1 className="text-2xl font-bold tracking-tight text-[#0F172A]">Iniciar sesión</h1>
+            <p className="mt-1 text-xs text-slate-400">Grupo Cordillera · Plataforma de Monitoreo</p>
+          </div>
+
+          {/* Fields */}
+          <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+            <label className="block text-xs font-semibold text-slate-600">
+              Correo electrónico
               <input
                 type="email"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
-                className="mt-2 w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+                className="mt-1.5 w-full rounded-lg border border-slate-200 bg-slate-50/60 px-3 py-2.5 text-xs font-medium text-slate-700 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
                 placeholder="correo@cordillera.cl"
                 autoComplete="email"
               />
             </label>
 
-            <label className="block text-sm font-semibold text-gray-700">
+            <label className="block text-xs font-semibold text-slate-600">
               Contraseña
               <input
                 type="password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
-                className="mt-2 w-full rounded-2xl border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
-                placeholder="Contraseña"
+                className="mt-1.5 w-full rounded-lg border border-slate-200 bg-slate-50/60 px-3 py-2.5 text-xs font-medium text-slate-700 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                placeholder="••••••••"
                 autoComplete="current-password"
               />
             </label>
 
+            {errorMessage && (
+              <div className="flex items-center gap-2 rounded-lg bg-red-50 px-3 py-2 ring-1 ring-red-100">
+                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-red-400" aria-hidden="true" />
+                <p className="text-xs font-semibold text-red-600">{errorMessage}</p>
+              </div>
+            )}
+
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full rounded-2xl bg-gradient-brand px-4 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70"
+              className="w-full rounded-lg bg-gradient-brand py-2.5 text-xs font-bold text-white shadow-sm transition hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-70"
             >
-              {isSubmitting ? 'Ingresando...' : 'Ingresar'}
+              {isSubmitting ? 'Ingresando...' : 'Ingresar →'}
             </button>
+          </form>
 
-            {errorMessage ? <p className="text-sm font-medium text-danger">{errorMessage}</p> : null}
+          {/* Forgot password */}
+          <p className="mt-5 text-center">
+            <button
+              type="button"
+              onClick={(e) => e.preventDefault()}
+              className="text-xs font-medium text-slate-400 transition-colors hover:text-slate-600"
+            >
+              ¿Olvidaste tu contraseña?
+            </button>
+          </p>
+
+          {/* Hint */}
+          <div className="mt-6 border-t border-slate-100 pt-4 text-center">
+            <p className="text-[10px] text-slate-300">
+              admin@cordillera.cl · ejecutivo@cordillera.cl · analista@cordillera.cl
+            </p>
+            <p className="mt-0.5 text-[10px] text-slate-300">Contraseña: <span className="font-semibold">1234</span></p>
           </div>
-        </form>
+        </div>
       </div>
 
-      <div className="relative flex w-full items-center justify-center overflow-hidden bg-gradient-brand px-8 py-12 text-white lg:w-3/5 lg:px-16">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.18),transparent_32%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.12),transparent_28%)]" />
-        <div className="relative max-w-2xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.4em] text-white/70">Grupo Cordillera</p>
-          <h2 className="mt-4 text-5xl font-black tracking-tight">Grupo Cordillera</h2>
-          <p className="mt-3 text-lg text-white/80">Plataforma de Monitoreo Inteligente</p>
+      {/* ── Right — brand panel ── */}
+      <div className="relative hidden overflow-hidden bg-gradient-brand lg:flex lg:w-[54%] lg:flex-col lg:items-center lg:justify-center lg:px-16">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.15),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.08),transparent_25%)]" />
 
-          <div className="mt-10 space-y-4">
+        <div className="relative max-w-md">
+          <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-white/50">
+            Grupo Cordillera
+          </p>
+          <h2 className="mt-4 text-4xl font-bold leading-tight tracking-tight text-white">
+            Plataforma de<br />Monitoreo Inteligente
+          </h2>
+          <p className="mt-3 text-sm leading-6 text-white/60">
+            Centraliza indicadores, audita integraciones y gestiona tu equipo desde un único panel.
+          </p>
+
+          <div className="mt-8 space-y-3">
             {loginFeatures.map((feature) => (
-              <div key={feature} className="flex items-start gap-4 rounded-2xl border border-white/15 bg-white/10 px-5 py-4 backdrop-blur-sm">
-                <span className="mt-1 h-3 w-3 rounded-full bg-white" aria-hidden="true" />
-                <p className="text-sm leading-6 text-white/90">{feature}</p>
+              <div
+                key={feature}
+                className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/8 px-4 py-3 backdrop-blur-sm"
+              >
+                <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-white/60" aria-hidden="true" />
+                <p className="text-xs leading-5 text-white/70">{feature}</p>
               </div>
             ))}
+          </div>
+
+          <div className="mt-10 flex items-center gap-3">
+            <div className="h-px flex-1 bg-white/10" />
+            <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-white/30">
+              Software Empresarial
+            </span>
+            <div className="h-px flex-1 bg-white/10" />
           </div>
         </div>
       </div>
@@ -275,16 +321,21 @@ function LoginPage() {
 
 function AccesoDenegadoPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 text-gray-900">
-      <div className="max-w-lg rounded-[2rem] border border-gray-200 bg-white p-8 shadow-sm">
-        <p className="text-xs font-bold uppercase tracking-[0.3em] text-primary-600">Acceso denegado</p>
-        <h1 className="mt-3 text-3xl font-black tracking-tight">No tienes permisos para continuar</h1>
-        <p className="mt-3 text-sm leading-6 text-gray-600">
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4">
+      <div className="w-full max-w-sm overflow-hidden rounded-xl border border-slate-100 bg-white p-8 text-center shadow-2xl">
+        <div className="flex justify-center">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-brand text-xs font-black text-white shadow-md">
+            GC
+          </div>
+        </div>
+        <p className="mt-4 text-[10px] font-bold uppercase tracking-[0.22em] text-slate-400">Acceso restringido</p>
+        <h1 className="mt-1 text-lg font-bold tracking-tight text-[#0F172A]">Sin permisos para continuar</h1>
+        <p className="mt-2 text-xs leading-5 text-slate-500">
           La ruta solicitada requiere otro perfil o una sesión activa.
         </p>
         <Link
           to="/login"
-          className="mt-6 inline-flex rounded-lg bg-gradient-brand px-4 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
+          className="mt-5 inline-flex rounded-lg bg-gradient-brand px-4 py-2 text-xs font-semibold text-white transition-opacity hover:opacity-90"
         >
           Volver al login
         </Link>

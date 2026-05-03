@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-const baseItemClass = 'flex items-center gap-3 border-l-3 px-4 py-3 text-sm font-medium transition-colors';
+const baseItemClass = 'flex items-center gap-3 border-l-3 px-4 py-2.5 text-xs transition-colors';
 
 const moduleItems = [
   { icon: '▣', label: 'Indicadores', to: '/dashboard/indicadores' },
@@ -27,12 +27,12 @@ export default function Sidebar({ role }) {
                 [
                   baseItemClass,
                   isActive
-                    ? 'border-blue-600 bg-gradient-brand-soft text-blue-700'
-                    : 'border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                    ? 'border-blue-600 bg-gradient-brand-soft text-blue-700 font-semibold'
+                    : 'border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900 font-medium',
                 ].join(' ')
               }
             >
-              <span className="text-base" aria-hidden="true">{item.icon}</span>
+              <span className="text-sm" aria-hidden="true">{item.icon}</span>
               <span>{item.label}</span>
             </NavLink>
           ))}
@@ -45,12 +45,12 @@ export default function Sidebar({ role }) {
                 [
                   baseItemClass,
                   isActive
-                    ? 'border-blue-600 bg-gradient-brand-soft text-blue-700'
-                    : 'border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                    ? 'border-blue-600 bg-gradient-brand-soft text-blue-700 font-semibold'
+                    : 'border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-900 font-medium',
                 ].join(' ')
               }
             >
-              <span className="text-base" aria-hidden="true">◫</span>
+              <span className="text-sm" aria-hidden="true">◫</span>
               <span>Usuarios</span>
             </NavLink>
           ) : null}

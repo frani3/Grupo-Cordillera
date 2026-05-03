@@ -33,7 +33,7 @@ export default function IndicadoresPage() {
           Row 2 │ MS2 Inventario (col-5) │ MS4 Finanzas (col-7) ───────────────── │
           Row 3 │ MS3 E-commerce (col-12) ──────────────────────────────────────── │
       ════════════════════════════════════════════════════════════════════════════ */}
-      <div className="grid grid-cols-12 gap-5">
+      <div className="grid grid-cols-12 gap-4">
 
         {/* ── Row 1 ── */}
 

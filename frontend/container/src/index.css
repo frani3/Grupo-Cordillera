@@ -51,6 +51,8 @@
 }
 
 @layer utilities {
+  .font-heading    { font-weight: 700 !important; }
+  .font-subheading { font-weight: 600 !important; }
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 }

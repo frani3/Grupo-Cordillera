@@ -1,28 +1,33 @@
 import React, { useMemo, useState } from 'react';
 
-function BadgeEstado({ activo }) {
-  const clases = activo
-    ? 'border-green-200 bg-green-50 text-green-700'
-    : 'border-gray-200 bg-gray-100 text-gray-600';
+const rolStyles = {
+  ADMINISTRADOR: 'bg-blue-50   text-blue-700   ring-1 ring-blue-100',
+  ANALISTA:      'bg-violet-50 text-violet-700 ring-1 ring-violet-100',
+  EJECUTIVO:     'bg-slate-50  text-slate-600  ring-1 ring-slate-200',
+};
 
+const rolLabels = {
+  ADMINISTRADOR: 'Administrador',
+  ANALISTA:      'Analista',
+  EJECUTIVO:     'Ejecutivo',
+};
+
+function BadgeRol({ rol }) {
   return (
-    <span className={`inline-flex rounded-full border px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] ${clases}`}>
-      {activo ? 'Activo' : 'Inactivo'}
+    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.1em] ${rolStyles[rol] ?? rolStyles.EJECUTIVO}`}>
+      {rolLabels[rol] ?? rol}
     </span>
   );
 }
 
-function BadgeRol({ rol }) {
-  const clases =
-    rol === 'ADMINISTRADOR'
-      ? 'border-blue-100 bg-blue-50 text-blue-700'
-      : rol === 'ANALISTA'
-        ? 'border-gray-200 bg-gray-100 text-gray-700'
-        : 'border-blue-100 bg-blue-50 text-blue-700';
-
+function BadgeEstado({ activo }) {
   return (
-    <span className={`inline-flex rounded-full border px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] ${clases}`}>
-      {rol}
+    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.1em] ${
+      activo
+        ? 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100'
+        : 'bg-slate-50   text-slate-500  ring-1 ring-slate-200'
+    }`}>
+      {activo ? 'Activo' : 'Inactivo'}
     </span>
   );
 }
@@ -30,25 +35,30 @@ function BadgeRol({ rol }) {
 function ModalConfirmacion({ usuario, onCancelar, onConfirmar }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-950/30 px-4 backdrop-blur-sm">
-      <div className="w-full max-w-md rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
-        <p className="text-xs font-bold uppercase tracking-[0.28em] text-gray-400">Confirmación</p>
-        <h3 className="mt-3 text-2xl font-black tracking-tight text-gray-900">Desactivar usuario</h3>
-        <p className="mt-3 text-sm leading-6 text-gray-600">
-          ¿Seguro que deseas desactivar a <span className="font-semibold text-gray-900">{usuario.nombre}</span>?
-        </p>
-
-        <div className="mt-6 flex justify-end gap-3">
+      <div className="w-full max-w-sm overflow-hidden rounded-xl border border-slate-100 bg-white shadow-md">
+        <div className="border-b border-slate-100 px-5 py-4">
+          <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-slate-400">Confirmación</p>
+          <h3 className="mt-1 text-base font-semibold text-[#0F172A]">Desactivar usuario</h3>
+        </div>
+        <div className="px-5 py-4">
+          <p className="text-xs leading-5 text-slate-500">
+            ¿Confirmas la desactivación de{' '}
+            <span className="font-bold text-slate-700">{usuario.nombre}</span>?
+            Esta acción impedirá el acceso al sistema.
+          </p>
+        </div>
+        <div className="flex justify-end gap-2 border-t border-slate-100 px-5 py-3">
           <button
             type="button"
             onClick={onCancelar}
-            className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
+            className="rounded-full border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-600 transition-colors hover:bg-slate-50"
           >
             Cancelar
           </button>
           <button
             type="button"
             onClick={onConfirmar}
-            className="rounded-lg border border-red-200 bg-white px-4 py-2 text-sm font-medium text-red-600 transition-colors hover:bg-red-50"
+            className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold text-red-600 transition-colors hover:bg-red-100"
           >
             Desactivar
           </button>
@@ -63,14 +73,11 @@ export default function TablaUsuarios({ usuarios, onCambiarRol, onDesactivar }) 
 
   const usuariosOrdenados = useMemo(
     () => [...usuarios].sort((a, b) => a.nombre.localeCompare(b.nombre)),
-    [usuarios]
+    [usuarios],
   );
 
   const confirmarDesactivacion = async () => {
-    if (!usuarioPendiente) {
-      return;
-    }
-
+    if (!usuarioPendiente) return;
     try {
       await onDesactivar(usuarioPendiente);
     } finally {
@@ -78,72 +85,73 @@ export default function TablaUsuarios({ usuarios, onCambiarRol, onDesactivar }) 
     }
   };
 
-  return (
-    <div className="space-y-4">
-      <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm">
-        <div className="overflow-x-auto">
-          <table className="min-w-full border-separate border-spacing-0">
-            <thead className="border-b border-gray-100 bg-gray-50">
-              <tr className="text-left text-xs font-bold uppercase tracking-[0.2em] text-gray-500">
-                <th className="px-6 py-4">Nombre</th>
-                <th className="px-6 py-4">Email</th>
-                <th className="px-6 py-4">Rol</th>
-                <th className="px-6 py-4">Estado</th>
-                <th className="px-6 py-4">Acciones</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white">
-              {usuariosOrdenados.map((usuario) => (
-                <tr key={usuario.id} className="align-top border-b border-gray-50 transition-colors hover:bg-blue-50/30">
-                  <td className="px-6 py-4">
-                    <div className="font-semibold text-gray-900">{usuario.nombre}</div>
-                  </td>
-                  <td className="px-6 py-4 text-sm text-gray-600">{usuario.email}</td>
-                  <td className="px-6 py-4">
-                    <BadgeRol rol={usuario.rol} />
-                  </td>
-                  <td className="px-6 py-4">
-                    <BadgeEstado activo={usuario.activo} />
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex flex-wrap gap-2">
-                      <button
-                        type="button"
-                        onClick={() => onCambiarRol(usuario)}
-                        className="rounded-lg bg-gradient-brand px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
-                      >
-                        Cambiar rol
-                      </button>
-                      <button
-                        type="button"
-                        disabled={!usuario.activo}
-                        onClick={() => setUsuarioPendiente(usuario)}
-                        className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400"
-                      >
-                        Desactivar
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+  if (usuariosOrdenados.length === 0) {
+    return (
+      <div className="px-5 py-10 text-center">
+        <p className="text-xs text-slate-400">No hay usuarios disponibles.</p>
+      </div>
+    );
+  }
 
-        {usuariosOrdenados.length === 0 ? (
-          <div className="border-t border-gray-100 px-6 py-10 text-center text-sm text-gray-500">
-            No hay usuarios disponibles.
-          </div>
-        ) : null}
+  return (
+    <>
+      <div className="overflow-x-auto">
+        <table className="min-w-full border-separate border-spacing-0">
+          <thead className="sticky top-0 z-10 bg-slate-50">
+            <tr>
+              <th className="border-b border-slate-100 px-4 py-2.5 text-left text-[10px] font-bold uppercase tracking-[0.22em] text-slate-400">Nombre</th>
+              <th className="border-b border-slate-100 px-4 py-2.5 text-left text-[10px] font-bold uppercase tracking-[0.22em] text-slate-400">Email</th>
+              <th className="border-b border-slate-100 px-4 py-2.5 text-left text-[10px] font-bold uppercase tracking-[0.22em] text-slate-400">Rol</th>
+              <th className="border-b border-slate-100 px-4 py-2.5 text-left text-[10px] font-bold uppercase tracking-[0.22em] text-slate-400">Estado</th>
+              <th className="border-b border-slate-100 px-4 py-2.5 text-right text-[10px] font-bold uppercase tracking-[0.22em] text-slate-400">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {usuariosOrdenados.map((u, idx) => (
+              <tr
+                key={u.id}
+                className={`transition-colors hover:bg-blue-50/30 ${
+                  idx !== usuariosOrdenados.length - 1 ? 'border-b border-slate-50' : ''
+                }`}
+              >
+                <td className="px-4 py-2.5">
+                  <p className="text-xs font-heading text-[#0F172A]">{u.nombre}</p>
+                </td>
+                <td className="px-4 py-2.5 text-xs font-medium text-slate-500">{u.email}</td>
+                <td className="px-4 py-2.5"><BadgeRol rol={u.rol} /></td>
+                <td className="px-4 py-2.5"><BadgeEstado activo={u.activo} /></td>
+                <td className="px-4 py-2.5">
+                  <div className="flex items-center justify-end gap-1.5">
+                    <button
+                      type="button"
+                      onClick={() => onCambiarRol(u)}
+                      className="rounded-full border border-slate-200 px-3 py-1 text-[10px] font-semibold text-slate-600 transition-colors hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700"
+                    >
+                      Cambiar rol
+                    </button>
+                    <button
+                      type="button"
+                      disabled={!u.activo}
+                      onClick={() => setUsuarioPendiente(u)}
+                      className="rounded-full border border-slate-200 px-3 py-1 text-[10px] font-semibold text-slate-500 transition-colors hover:border-red-200 hover:bg-red-50 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-40"
+                    >
+                      Desactivar
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
-      {usuarioPendiente ? (
+      {usuarioPendiente && (
         <ModalConfirmacion
           usuario={usuarioPendiente}
           onCancelar={() => setUsuarioPendiente(null)}
           onConfirmar={confirmarDesactivacion}
         />
-      ) : null}
-    </div>
+      )}
+    </>
   );
 }

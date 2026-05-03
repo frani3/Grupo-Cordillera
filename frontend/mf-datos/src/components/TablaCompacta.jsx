@@ -115,7 +115,7 @@ export default function TablaCompacta({
               {columns.map((col) => (
                 <th
                   key={col.key}
-                  className={`border-b border-slate-100 px-3 py-2.5 text-[10px] font-semibold uppercase tracking-wider text-slate-500 ${
+                  className={`border-b border-slate-100 px-3 py-2.5 text-[10px] font-bold uppercase tracking-[0.22em] text-slate-400 ${
                     col.right ? 'text-right' : 'text-left'
                   }`}
                 >

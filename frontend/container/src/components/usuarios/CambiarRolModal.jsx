@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
+const fieldLabel = 'block text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500';
+const fieldInput = 'mt-1.5 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-700 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100';
+
 export default function CambiarRolModal({ usuario, onCancelar, onConfirmar }) {
   const [nuevoRol, setNuevoRol] = useState(usuario?.rol ?? 'EJECUTIVO');
 
@@ -7,9 +10,7 @@ export default function CambiarRolModal({ usuario, onCancelar, onConfirmar }) {
     setNuevoRol(usuario?.rol ?? 'EJECUTIVO');
   }, [usuario]);
 
-  if (!usuario) {
-    return null;
-  }
+  if (!usuario) return null;
 
   const handleConfirmar = async () => {
     await onConfirmar(usuario, nuevoRol);
@@ -17,37 +18,38 @@ export default function CambiarRolModal({ usuario, onCancelar, onConfirmar }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-950/30 px-4 backdrop-blur-sm">
-      <div className="w-full max-w-md rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
-        <p className="text-xs font-bold uppercase tracking-[0.28em] text-gray-400">Cambiar rol</p>
-        <h3 className="mt-3 text-2xl font-black tracking-tight text-gray-900">{usuario.nombre}</h3>
+      <div className="w-full max-w-sm overflow-hidden rounded-xl border border-slate-100 bg-white shadow-md">
+        <div className="border-b border-slate-100 px-5 py-4">
+          <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-slate-400">Cambiar Rol</p>
+          <h3 className="mt-1 text-base font-semibold text-[#0F172A]">{usuario.nombre}</h3>
+          <p className="mt-0.5 text-[11px] text-slate-400">{usuario.email}</p>
+        </div>
 
-        <label className="mt-5 block text-sm font-semibold text-gray-700">
-          Rol
-          <select
-            value={nuevoRol}
-            onChange={(event) => setNuevoRol(event.target.value)}
-            className="mt-2 w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-gray-900 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
-          >
-            <option value="EJECUTIVO">EJECUTIVO</option>
-            <option value="ANALISTA">ANALISTA</option>
-            <option value="ADMINISTRADOR">ADMINISTRADOR</option>
-          </select>
-        </label>
+        <div className="px-5 py-4">
+          <label className={fieldLabel}>
+            Nuevo rol
+            <select value={nuevoRol} onChange={(e) => setNuevoRol(e.target.value)} className={fieldInput}>
+              <option value="EJECUTIVO">Ejecutivo</option>
+              <option value="ANALISTA">Analista</option>
+              <option value="ADMINISTRADOR">Administrador</option>
+            </select>
+          </label>
+        </div>
 
-        <div className="mt-6 flex justify-end gap-3">
+        <div className="flex justify-end gap-2 border-t border-slate-100 px-5 py-3">
           <button
             type="button"
             onClick={onCancelar}
-            className="rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
+            className="rounded-full border border-slate-200 px-3 py-1 text-xs font-semibold text-slate-600 transition-colors hover:bg-slate-50"
           >
             Cancelar
           </button>
           <button
             type="button"
             onClick={handleConfirmar}
-            className="rounded-lg bg-gradient-brand px-4 py-2 text-sm font-medium text-white transition-opacity hover:opacity-90"
+            className="inline-flex items-center gap-1.5 rounded-lg bg-gradient-brand px-4 py-1.5 text-xs font-semibold text-white transition-opacity hover:opacity-90"
           >
-            Confirmar
+            Confirmar cambio
           </button>
         </div>
       </div>

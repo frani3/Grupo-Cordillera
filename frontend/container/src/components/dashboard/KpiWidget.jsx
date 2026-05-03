@@ -30,11 +30,11 @@ const STATUS_STYLES = {
 
 function getStatusKey(valor, meta, umbralMin, invertido) {
   if (invertido) {
-    if (valor <= meta)     return 'optimo';
+    if (valor <= meta)      return 'optimo';
     if (valor <= umbralMin) return 'riesgo';
     return 'critico';
   }
-  if (valor >= meta)     return 'optimo';
+  if (valor >= meta)      return 'optimo';
   if (valor >= umbralMin) return 'riesgo';
   return 'critico';
 }
@@ -42,7 +42,7 @@ function getStatusKey(valor, meta, umbralMin, invertido) {
 function StatusPill({ statusKey }) {
   const s = STATUS_STYLES[statusKey];
   return (
-    <span className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-semibold ring-1 ${s.pill}`}>
+    <span className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-semibold ring-1 ${s.pill}`}>
       <span className={`h-1.5 w-1.5 rounded-full ${s.dot}`} />
       {s.label}
     </span>
@@ -56,13 +56,12 @@ function DeltaBadge({ delta, invertido }) {
   const label = fmtDelta(delta);
   if (!label) return null;
 
-  // Arrow direction: for invertido KPIs, "going up" is bad
-  const isGoingUp = delta.value >= 0;
+  const isGoingUp  = delta.value >= 0;
   const isPositive = invertido ? !isGoingUp : isGoingUp;
-  const arrow = isGoingUp ? '↑' : '↓';
+  const arrow      = isGoingUp ? '↑' : '↓';
 
   return (
-    <span className={`text-xs font-medium ${isPositive ? 'text-gray-400' : 'text-red-500'}`}>
+    <span className={`text-[11px] font-semibold ${isPositive ? 'text-gray-400' : 'text-red-500'}`}>
       {arrow} {label} <span className="text-gray-300">(7d)</span>
     </span>
   );
@@ -74,36 +73,37 @@ export default function KpiWidget({ kpi, children }) {
   const statusKey = getStatusKey(kpi.valor, kpi.meta, kpi.umbralMin, kpi.invertido);
 
   return (
-    <div className="flex h-full flex-col rounded-xl border border-slate-100 bg-white p-5 shadow-sm">
+    <div className="flex h-full flex-col rounded-xl border border-slate-100 bg-white p-4 shadow-sm">
+
       {/* Header row */}
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-slate-400">
+          <span className="text-[10px] font-heading uppercase tracking-[0.22em] text-slate-400">
             {kpi.ms}
           </span>
-          <h3 className="mt-1 text-sm font-semibold text-gray-700">{kpi.label}</h3>
+          <h3 className="mt-1 text-xs font-semibold text-slate-700">{kpi.label}</h3>
         </div>
         <StatusPill statusKey={statusKey} />
       </div>
 
       {/* Headline value + delta */}
-      <div className="mt-4">
-        <p className="text-[2rem] font-bold leading-none tracking-tight text-[#0F172A]">
+      <div className="mt-2">
+        <p className="text-2xl font-heading leading-none tracking-tight text-[#0F172A]">
           {fmtValue(kpi.valor, kpi.unidad)}
         </p>
-        <div className="mt-1.5 flex items-center gap-3">
-          <span className="text-xs text-gray-400">Meta {fmtValue(kpi.meta, kpi.unidad)}</span>
+        <div className="mt-1 flex items-center gap-3">
+          <span className="text-[11px] text-gray-400">Meta {fmtValue(kpi.meta, kpi.unidad)}</span>
           <DeltaBadge delta={kpi.delta} invertido={kpi.invertido} />
         </div>
       </div>
 
-      {/* Chart slot — grows to fill remaining height */}
-      <div className="mt-5 flex-1">
+      {/* Chart slot */}
+      <div className="mt-3 flex-1">
         {children}
       </div>
 
-      {/* Footer — IEEE transparency */}
-      <div className="mt-4 border-t border-slate-50 pt-3">
+      {/* Footer */}
+      <div className="mt-2 border-t border-slate-50 pt-2">
         {kpi.staleData ? (
           <p className="flex items-center gap-1.5 text-[11px] font-medium text-amber-600">
             <svg className="h-3 w-3 shrink-0" viewBox="0 0 16 16" fill="currentColor">

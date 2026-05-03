@@ -187,6 +187,9 @@ export default function App({ rolUsuario }) {
         -webkit-font-smoothing: antialiased !important;
         -moz-osx-font-smoothing: grayscale !important;
       }
+      /* Size fallbacks aligned with KpiWidget scale (override only when Tailwind classes absent) */
+      th { font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; }
+      td { font-size: 0.75rem; font-weight: 500; }
     `}</style>
     <section className="w-full max-w-full space-y-6">
 
@@ -204,7 +207,7 @@ export default function App({ rolUsuario }) {
                 key={fuente}
                 type="button"
                 onClick={() => handleTab(fuente)}
-                className={`relative flex flex-col items-center gap-1.5 rounded-t-lg px-5 py-3 text-[11px] font-semibold transition-colors focus:outline-none ${
+                className={`relative flex flex-col items-center gap-1.5 rounded-t-lg px-5 py-3 text-[11px] font-bold transition-colors focus:outline-none ${
                   isActive
                     ? 'border border-b-0 border-blue-200 bg-white text-blue-700 shadow-[0_1px_0_0_white]'
                     : 'text-slate-400 hover:text-slate-700'
@@ -225,7 +228,7 @@ export default function App({ rolUsuario }) {
         {/* Sub-header */}
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-gray-50 px-5 py-3">
           <div className="flex items-center gap-3">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
+            <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-slate-400">
               {activeMs?.msLabel}
             </span>
             <span className="text-[10px] text-gray-300">·</span>
