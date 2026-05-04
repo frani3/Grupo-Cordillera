@@ -1,4 +1,61 @@
-import { KPI_MOCK } from '../../../mf-indicadores/src/mocks/kpiMock';
+// Mocks for local container build
+const KPI_MOCK = [
+  {
+    nombre: '% Cumplimiento Meta',
+    valor: 83.3,
+    meta: 100,
+    umbralMin: 70,
+    unidad: '%',
+    invertido: false,
+    staleData: false,
+    timestampUltimoValor: '10:00',
+    historico: Array(90).fill({ fecha: '01/01', valor: 85 })
+  },
+  {
+    nombre: '% Quiebre de Stock',
+    valor: 4.2,
+    meta: 2,
+    umbralMin: 7,
+    unidad: '%',
+    invertido: true,
+    staleData: false,
+    timestampUltimoValor: '10:05',
+    historico: Array(90).fill({ fecha: '01/01', valor: 4 })
+  },
+  {
+    nombre: '% Despachos a Tiempo',
+    valor: 91.5,
+    meta: 95,
+    umbralMin: 85,
+    unidad: '%',
+    invertido: false,
+    staleData: true,
+    timestampUltimoValor: '09:40',
+    historico: Array(90).fill({ fecha: '01/01', valor: 92 })
+  },
+  {
+    nombre: 'EBITDA Mensual',
+    valor: 48500000,
+    meta: 55000000,
+    umbralMin: 35000000,
+    unidad: 'CLP',
+    invertido: false,
+    staleData: true,
+    timestampUltimoValor: '09:30',
+    historico: Array(90).fill({ fecha: '01/01', valor: 45000000 })
+  },
+  {
+    nombre: 'Tasa de Resolución',
+    valor: 87.3,
+    meta: 90,
+    umbralMin: 80,
+    unidad: '%',
+    invertido: false,
+    staleData: false,
+    timestampUltimoValor: '10:10',
+    historico: Array(90).fill({ fecha: '01/01', valor: 88 })
+  }
+];
 
 // Helper: Extract last 7 days from 90-day history
 function getLast7Days(historico) {

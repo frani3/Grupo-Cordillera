@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  host:
+    build:
+      context: ./frontend/container
+    ports:
+      - "3000:80"
+    networks:
+      - cordillera-net
+    depends_on:
+      - mf-datos
+      - mf-indicadores
+      - mf-reportes
+
+  mf-datos:
+    build:
+      context: ./frontend/mf-datos
+    ports:
+      - "3001:80"
+    networks:
+      - cordillera-net
+
+  mf-indicadores:
+    build:
+      context: ./frontend/mf-indicadores
+    ports:
+      - "3002:80"
+    networks:
+      - cordillera-net
+
+  mf-reportes:
+    build:
+      context: ./frontend/mf-reportes
+    ports:
+      - "3003:80"
+    networks:
+      - cordillera-net
+
+networks:
+  cordillera-net:
+    driver: bridge

@@ -1,7 +1,6 @@
 import React, { Suspense, useContext } from 'react';
 import AuthContext from '../AuthContext';
 import ErrorBoundary from '../components/ErrorBoundary';
-import { Spinner } from '@shared';
 
 const MfReportes = React.lazy(() => import('mfReportes/App'));
 
@@ -13,7 +12,7 @@ export default function ReportesPage() {
       <Suspense
         fallback={
           <div className="flex min-h-[calc(100vh-112px)] items-center justify-center rounded-3xl border border-dashed border-slate-300 bg-white">
-            <Spinner />
+            <div className="text-sm font-medium text-slate-500">Cargando reportes...</div>
           </div>
         }
       >

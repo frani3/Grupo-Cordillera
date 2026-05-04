@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AuthContext from '../AuthContext';
-import { Spinner, Toast } from '@shared';
 import CambiarRolModal from '../components/usuarios/CambiarRolModal';
 import FormularioUsuario from '../components/usuarios/FormularioUsuario';
 import TablaUsuarios from '../components/usuarios/TablaUsuarios';
@@ -154,7 +153,7 @@ export default function UsuariosPage() {
 
         {cargando ? (
           <div className="flex items-center justify-center py-10">
-            <Spinner />
+            <div className="text-sm font-medium text-slate-500">Cargando...</div>
           </div>
         ) : (
           <TablaUsuarios
@@ -173,7 +172,9 @@ export default function UsuariosPage() {
 
       {toast.visible && (
         <div className="fixed bottom-6 right-6 z-50 w-full max-w-md px-4 sm:px-0">
-          <Toast tipo={toast.tipo} mensaje={toast.mensaje} />
+          <div className={`rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm font-medium shadow-sm ${toast.tipo === 'exito' ? 'text-emerald-700' : 'text-gray-700'}`}>
+            {toast.mensaje}
+          </div>
         </div>
       )}
     </div>

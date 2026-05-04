@@ -1,0 +1,29 @@
+name: Build Microfrontends
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        module: [container, mf-datos, mf-indicadores, mf-reportes]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        working-directory: ./frontend/${{ matrix.module }}
+        run: npm install
+
+      - name: Build
+        working-directory: ./frontend/${{ matrix.module }}
+        run: npm run build
