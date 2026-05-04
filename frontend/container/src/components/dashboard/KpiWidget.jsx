@@ -105,12 +105,12 @@ export default function KpiWidget({ kpi, children }) {
       {/* Footer */}
       <div className="mt-2 border-t border-slate-50 pt-2">
         {kpi.staleData ? (
-          <p className="flex items-center gap-1.5 text-[11px] font-medium text-amber-600">
+          <div className="flex items-center gap-1.5 rounded bg-amber-50 border-amber-200 px-2 py-1 text-[11px] font-semibold text-amber-800">
             <svg className="h-3 w-3 shrink-0" viewBox="0 0 16 16" fill="currentColor">
               <path d="M8 1a7 7 0 100 14A7 7 0 008 1zM8 3a1 1 0 011 1v3.586l2.707 2.707a1 1 0 01-1.414 1.414L7.586 9 7 8.414V4a1 1 0 011-1z" />
             </svg>
             Dato de respaldo · {kpi.timestamp}
-          </p>
+          </div>
         ) : (
           <p className="text-[11px] text-gray-400">Últ. actualización: {kpi.timestamp}</p>
         )}

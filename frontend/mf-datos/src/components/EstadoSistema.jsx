@@ -86,7 +86,7 @@ export default function EstadoSistema({ estados, loading }) {
 
       {sistemaSeleccionado ? (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-950/35 px-4 backdrop-blur-sm">
-          <div className="w-full max-w-md rounded-2xl border border-gray-100 bg-white p-6 shadow-xl">
+          <div className="w-full max-w-md rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-gray-400">Detalle</p>

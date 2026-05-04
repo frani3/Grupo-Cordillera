@@ -112,7 +112,10 @@ function AuthProvider({ children }) {
   };
 
   const logout = () => {
+    window.localStorage.clear();
+    window.sessionStorage.clear();
     setAuthState({ isAuthenticated: false, user: null });
+    window.location.href = '/login';
   };
 
   const value = useMemo(

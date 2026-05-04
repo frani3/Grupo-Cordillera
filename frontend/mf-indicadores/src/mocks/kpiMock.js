@@ -138,7 +138,7 @@ export const KPI_MOCK = [
     unidad: '%',
     invertido: false,
     staleData: true,
-    timestampUltimoValor: otdHistorico.at(-1)?.fechaCompleta ?? '',
+    timestampUltimoValor: formatTime(new Date(Date.now() - 15 * 60000)),
     historico: otdHistorico,
   },
   {
@@ -152,7 +152,7 @@ export const KPI_MOCK = [
     unidad: 'CLP',
     invertido: false,
     staleData: true,
-    timestampUltimoValor: ebitdaHistorico.at(-1)?.fechaCompleta ?? '',
+    timestampUltimoValor: formatTime(new Date(Date.now() - 25 * 60000)),
     historico: ebitdaHistorico,
   },
   {

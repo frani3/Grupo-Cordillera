@@ -47,7 +47,7 @@ function HostHealthBar() {
         return (
           <div
             key={ms}
-            className={`group flex flex-col gap-3 rounded-2xl border border-gray-100 border-l-4 bg-white p-4 shadow-sm transition-shadow duration-200 hover:shadow-lg ${s.border}`}
+            className={`group flex flex-col gap-3 rounded-xl border border-gray-100 border-l-4 bg-white p-4 shadow-sm transition-shadow duration-200 hover:shadow-lg ${s.border}`}
           >
             {/* MS code */}
             <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-gray-400">
@@ -64,13 +64,13 @@ function HostHealthBar() {
                 )}
                 <span className={`relative inline-flex h-2.5 w-2.5 rounded-full ${s.dot}`} />
               </span>
-              <span className="text-[11px] font-semibold leading-tight text-slate-700">
+              <span className="text-[11px] font-bold leading-tight text-slate-700">
                 {label}
               </span>
             </div>
 
             {/* Status label */}
-            <span className={`text-xs font-semibold ${s.text}`}>{s.label}</span>
+            <span className={`text-xs font-bold ${s.text}`}>{s.label}</span>
 
             {/* Last sync timestamp from INDICADORES_DATA */}
             {kpi?.timestamp && (

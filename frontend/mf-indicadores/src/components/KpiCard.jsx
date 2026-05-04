@@ -55,12 +55,12 @@ function buildDelta(valor, meta, unidad, invertido) {
 
 function StaleFooter({ timestamp }) {
   return (
-    <p className="flex items-center gap-1 text-[11px] text-amber-600">
+    <div className="flex items-center gap-1.5 rounded bg-amber-50 border-amber-200 px-2 py-1 text-[11px] font-semibold text-amber-800">
       <svg className="h-3 w-3 shrink-0" viewBox="0 0 16 16" fill="currentColor">
         <path d="M8 1a7 7 0 100 14A7 7 0 008 1zM8 3a1 1 0 011 1v3.586l2.707 2.707a1 1 0 01-1.414 1.414L7.586 9 7 8.414V4a1 1 0 011-1z" />
       </svg>
       Dato en caché · {timestamp}
-    </p>
+    </div>
   );
 }
 
@@ -87,7 +87,7 @@ export default function KpiCard({ kpi }) {
     : 'text-red-500 font-semibold';
 
   return (
-    <article className="flex flex-col gap-4 overflow-hidden rounded-2xl border border-gray-100 bg-white p-5 shadow-sm ring-1 ring-black/[0.03] transition-shadow duration-150 hover:shadow-md">
+    <article className="flex flex-col gap-4 overflow-hidden rounded-xl border border-gray-100 bg-white p-5 shadow-sm ring-1 ring-black/[0.03] transition-shadow duration-150 hover:shadow-md">
       {/* ── Header ── */}
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
